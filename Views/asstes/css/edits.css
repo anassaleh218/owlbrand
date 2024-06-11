@@ -1,0 +1,62 @@
+.title{
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
+}
+.title:hover{
+   color:#384aeb
+}
+.homebtn{
+    font-weight: bolder;
+}
+.nav-item{
+    font-size: larger;
+}
+.nav-item:hover{
+    color: gray;
+}
+
+.hero-banner::before{
+    background-color: black;
+}
+
+.hero-banner{
+    background-color: white;
+}
+.button{
+    border: 1px solid black;
+    background: black;
+}
+.btn-primary{
+    background-color: black;
+}
+.btn-primary:hover{
+    background-color: white;
+    color: black;
+}
+.button-header {
+    color: white;
+}
+.footer-area {
+    background-color: black;
+}
+.footer-bottom{
+    background-color: black;
+}
+
+/*  */
+.login_box_area .login_box_img:before{
+    background-color: dimgray;
+}
+
+/*  */
+
+.sidebar-categories .head{
+    background: black;
+}
+
+.sidebar-categories a{
+    text-decoration: none;
+    color: black;
+}
+.sidebar-categories a:hover{
+    color: gray;
+}

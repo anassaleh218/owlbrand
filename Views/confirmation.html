@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Aroma Shop - Home</title>
+    <link rel="icon" href="asstes/img/Fevicon.png" type="image/png" />
+    <link rel="stylesheet" href="asstes/vendors/bootstrap/bootstrap.min.css" />
+    <link rel="stylesheet" href="asstes/vendors/fontawesome/css/all.css" />
+    <link
+      rel="stylesheet"
+      href="asstes/vendors/themify-icons/themify-icons.css"
+    />
+    <link rel="stylesheet" href="asstes/vendors/nice-select/nice-select.css" />
+    <link
+      rel="stylesheet"
+      href="asstes/vendors/owl-carousel/owl.theme.default.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="asstes/vendors/owl-carousel/owl.carousel.min.css"
+    />
+
+    <link rel="stylesheet" href="asstes/css/style.css" />
+    <link rel="stylesheet" href="asstes/css/edits.css" />
+  </head>
+
+  <body>
+    <!--================ Start Header Menu Area =================-->
+    <header class="header_area">
+      <div class="main_menu">
+        <nav class="navbar navbar-expand-lg navbar-light">
+          <div class="container" style="min-width: 1220px">
+            <a class="navbar-brand logo_h" href="index.html">
+              <!-- <img src="asstes/img/logo.png" alt=""> -->
+              <h3 class="title">E-Shopping</h3>
+            </a>
+
+            <div
+              class="collapse navbar-collapse offset"
+              id="navbarSupportedContent"
+            >
+              <ul class="nav navbar-nav menu_nav ml-auto mr-auto">
+                <li class="nav-item active">
+                  <a class="nav-link" href="index.html">Home</a>
+                </li>
+
+                <li class="nav-item">
+                  <a class="nav-link" href="products.html">Products</a>
+                </li>
+                <li class="nav-item">
+                  <a
+                    id="myOrders"
+                    class="nav-link"
+                    href="my-orders.html"
+                    style="display: none"
+                    >My Orders</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a
+                    id="add"
+                    class="nav-link"
+                    href="add-product.html"
+                    style="display: none"
+                    >Add Product</a
+                  >
+                </li>
+              </ul>
+              <ul class="nav-shop">
+                <li class="nav-item">
+                  <button><i class="ti-search"></i></button>
+                </li>
+                <!-- ______________ -->
+                <li class="nav-item">
+                  <button>
+                    <a href="cart.html">
+                      <i class="ti-shopping-cart"></i
+                      >
+                    </a>
+                  </button>
+                </li>
+                <!-- ______________ -->
+                <li id="loginNavItem" class="nav-item">
+                  <a
+                    id="loginButton"
+                    class="button button-header"
+                    href="login.html"
+                    >Login</a
+                  >
+                </li>
+                <li id="registerNavItem" class="nav-item">
+                  <a
+                    id="registerButton"
+                    class="button button-header"
+                    href="register.html"
+                    >Register</a
+                  >
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </header>
+    <!--================ End Header Menu Area =================-->
+    <!-- ================ start banner area ================= -->
+    <section class="blog-banner-area" id="category">
+      <div class="container h-100">
+        <div class="blog-banner">
+          <div class="text-center">
+            <h1>Order Confirmation</h1>
+            <nav aria-label="breadcrumb" class="banner-breadcrumb">
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">
+                  Shop Category
+                </li>
+              </ol>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- ================ end banner area ================= -->
+
+    <!--================Order Details Area =================-->
+    <section class="order_details section-margin--small">
+      <div class="container">
+        <p class="text-center billing-alert">
+          Thank you. Your order has been received.
+        </p>
+        <div class="row mb-5" id="data">
+
+        </div>
+        <div class="order_details_table">
+          <h2>Order Details</h2>
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">Product</th>
+                  <th scope="col">Quantity</th>
+                  <th scope="col">Total</th>
+                </tr>
+              </thead>
+               <tbody id="details">
+   
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!--================End Order Details Area =================-->
+
+    <!--================ End =================-->
+
+    <!-- footer -->
+    <!--================ Start footer Area  =================-->
+    <footer class="footer">
+      <div class="footer-area">
+        <div class="container">
+          <div class="row section_gap">
+            <div class="col-lg-3 col-md-6 col-sm-6">
+              <div class="single-footer-widget tp_widgets">
+                <h4 class="footer_title large_title">Our Mission</h4>
+                <p>
+                  So seed seed green that winged cattle in. Gathering thing made
+                  fly you're no divided deep moved us lan Gathering thing us
+                  land years living.
+                </p>
+                <p>
+                  So seed seed green that winged cattle in. Gathering thing made
+                  fly you're no divided deep moved
+                </p>
+              </div>
+            </div>
+            <div class="offset-lg-1 col-lg-2 col-md-6 col-sm-6">
+              <div class="single-footer-widget tp_widgets">
+                <h4 class="footer_title">Quick Links</h4>
+                <ul class="list">
+                  <li><a href="index.html">Home</a></li>
+                  <li><a href="products.php">Shop</a></li>
+                  <li><a href="fav-products.php">Favourites</a></li>
+                  <li><a href="watchlist.php">Watch List</a></li>
+                </ul>
+              </div>
+            </div>
+            <div class="offset-lg-1 col-lg-3 col-md-6 col-sm-6">
+              <div class="single-footer-widget tp_widgets">
+                <h4 class="footer_title">Contact Us</h4>
+                <div class="ml-40">
+                  <p class="sm-head">
+                    <span class="fa fa-location-arrow"></span>
+                    Head Office
+                  </p>
+                  <p>123, Main Street, Your City</p>
+
+                  <p class="sm-head">
+                    <span class="fa fa-phone"></span>
+                    Phone Number
+                  </p>
+                  <p>
+                    +123 456 7890 <br />
+                    +123 456 7890
+                  </p>
+
+                  <p class="sm-head">
+                    <span class="fa fa-envelope"></span>
+                    Email
+                  </p>
+                  <p>
+                    free@infoexample.com <br />
+                    www.infoexample.com
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div class="container">
+          <div class="row d-flex">
+            <p class="col-lg-12 footer-text text-center">
+              <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+              Copyright &copy;
+              <script>
+                document.write(new Date().getFullYear());
+              </script>
+              All rights reserved | This project is made with
+              <i class="fa fa-heart" aria-hidden="true"></i>
+              <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+            </p>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <!--================ End footer Area  =================-->
+    <script src="asstes/vendors/jquery/jquery-3.2.1.min.js"></script>
+    <script src="asstes/vendors/bootstrap/bootstrap.bundle.min.js"></script>
+    <script src="asstes/vendors/skrollr.min.js"></script>
+    <script src="asstes/vendors/owl-carousel/owl.carousel.min.js"></script>
+    <script src="asstes/vendors/nice-select/jquery.nice-select.min.js"></script>
+    <script src="asstes/vendors/jquery.ajaxchimp.min.js"></script>
+    <script src="asstes/vendors/mail-script.js"></script>
+    <script src="asstes/js/main.js"></script>
+    <script src="asstes/js/project.js"></script>
+
+    <!-- new -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+      function updateTable() {
+        $("#card").empty();
+        const urlParams = new URLSearchParams(window.location.search);
+        const category = urlParams.get("order");
+        if (category) {
+          var url = "http://127.0.0.1:8081/order/confirmation/" + category;
+        }
+        $.ajax({
+          url: url,
+          type: "GET",
+          datatype: "json",
+          // headers: {
+          //   Authorization: "Bearer " + token,
+          // },
+          success: function (data) {
+            console.log(data["order"]);
+            console.log(data["orderBill"][0]);
+            console.log(data["orderProduct"]);
+            total = 0;
+            data["orderProduct"].forEach(order => {
+              product = order.product
+              console.log(product)
+              total += product.price* order.quantity
+              d = `<tr>
+                  <td>
+                    <p>${product.name}</p>
+                  </td>
+                  <td>
+                    <h5>
+                      x
+                      ${order.quantity}
+                    </h5>
+                  </td>
+                  <td>
+                    <p>
+                      $
+                      ${product.price* order.quantity}
+                    </p>
+                  </td>
+                </tr>`
+          $("#details").append(d);
+    
+            });
+            console.log(total)
+            var cardHtml = `<div class="col-md-6 col-xl-4 mb-4 mb-xl-0">
+            <div class="confirmation-card p-3">
+              <h3 class="billing-title">Order Info</h3>
+              <table class="order-rable">
+                <tr>
+                  <td>Order number</td>
+                  <td>
+                    :
+                    ${data["order"]["id"]}
+                  </td>
+                </tr>
+                <tr>
+                  <td>Order Status</td>
+                  <td>
+                    :
+                    ${data["order"]["orderStatus"]}
+                  </td>
+                </tr>
+                <tr>
+                  <td>Total</td>
+                  <td>: ${total}</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+
+          <div class="col-md-6 col-xl-4 mb-4 mb-xl-0">
+            <div class="confirmation-card p-3">
+              <h3 class="billing-title">Billing Address</h3>
+              <table class="order-rable">
+                <tr>
+                  <td>Flat No</td>
+                  <td>
+                    :
+                    ${data["orderBill"][0]["flatNo"]}
+                  </td>
+                </tr>
+                <tr>
+                  <td>Building No</td>
+                  <td>
+                    :
+                    ${data["orderBill"][0]["buildingNo"]}
+                  </td>
+                </tr>
+                <tr>
+                  <td>Street</td>
+                  <td>
+                    :
+                    ${data["orderBill"][0]["street"]}
+                  </td>
+                </tr>
+                <tr>
+                  <td>City</td>
+                  <td>
+                    :
+                    ${data["orderBill"][0]["city"]}
+                  </td>
+                </tr>
+                <tr>
+                  <td>Country</td>
+                  <td>
+                    :
+                    ${data["orderBill"][0]["country"]}
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+
+          <div class="col-md-6 col-xl-4 mb-4 mb-xl-0">
+            <div class="confirmation-card p-2 mb-2">
+              <h3 class="billing-title">Payment Details</h3>
+              <table class="order-rable">
+                <tr>
+                  <td>Credit Card Type</td>
+                  <td>
+                    :
+                    ${data["orderBill"][0]["creditCardType"]}
+                  </td>
+                </tr>
+                <tr>
+                  <td>Credit Card Holder Name</td>
+                  <td>
+                    :
+                    ${data["orderBill"][0]["creditCardHolderName"]}
+                  </td>
+                </tr>
+              </table>
+            </div>
+            <div class="confirmation-card p-2">
+              <h3 class="billing-title">Contact Details</h3>
+              <table class="order-rable">
+                <tr>
+                  <td>Phone Number</td>
+                  <td>
+                    :
+                    ${data["orderBill"][0]["phone"]}
+                  </td>
+                </tr>
+                <tr>
+                  <td>Email</td>
+                  <td>
+                    :
+                    ${data["orderBill"][0]["email"]}
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>`
+          $("#data").append(cardHtml);
+          },
+          error: function () {
+            console.log("error happened");
+          },
+        });
+      }
+      updateTable();
+    </script>
+  </body>
+</html>

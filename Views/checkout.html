@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Aroma Shop - Home</title>
+    <link rel="icon" href="asstes/img/Fevicon.png" type="image/png" />
+    <link rel="stylesheet" href="asstes/vendors/bootstrap/bootstrap.min.css" />
+    <link rel="stylesheet" href="asstes/vendors/fontawesome/css/all.css" />
+    <link
+      rel="stylesheet"
+      href="asstes/vendors/themify-icons/themify-icons.css"
+    />
+    <link rel="stylesheet" href="asstes/vendors/nice-select/nice-select.css" />
+    <link
+      rel="stylesheet"
+      href="asstes/vendors/owl-carousel/owl.theme.default.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="asstes/vendors/owl-carousel/owl.carousel.min.css"
+    />
+
+    <link rel="stylesheet" href="asstes/css/style.css" />
+    <link rel="stylesheet" href="asstes/css/edits.css" />
+  </head>
+
+  <body>
+    <!--================ Start Header Menu Area =================-->
+    <header class="header_area">
+      <div class="main_menu">
+        <nav class="navbar navbar-expand-lg navbar-light">
+          <div class="container" style="min-width: 1220px">
+            <a class="navbar-brand logo_h" href="index.html">
+              <!-- <img src="asstes/img/logo.png" alt=""> -->
+              <h3 class="title">E-Shopping</h3>
+            </a>
+
+            <div
+              class="collapse navbar-collapse offset"
+              id="navbarSupportedContent"
+            >
+              <ul class="nav navbar-nav menu_nav ml-auto mr-auto">
+                <li class="nav-item active">
+                  <a class="nav-link" href="index.html">Home</a>
+                </li>
+
+                <li class="nav-item">
+                  <a class="nav-link" href="products.html">Products</a>
+                </li>
+                <li class="nav-item">
+                  <a
+                    id="myOrders"
+                    class="nav-link"
+                    href="my-orders.html"
+                    style="display: none"
+                    >My Orders</a
+                  >
+                </li>
+
+                <li class="nav-item">
+                  <a
+                    id="add"
+                    class="nav-link"
+                    href="add-product.html"
+                    style="display: none"
+                    >Add Product</a
+                  >
+                </li>
+              </ul>
+              <ul class="nav-shop">
+                <li class="nav-item">
+                  <button><i class="ti-search"></i></button>
+                </li>
+                <!-- ______________ -->
+                <li class="nav-item">
+                  <button>
+                    <a href="cart.html">
+                      <i class="ti-shopping-cart"></i
+                      >
+                    </a>
+                  </button>
+                </li>
+                <!-- ______________ -->
+                <li id="loginNavItem" class="nav-item">
+                  <a
+                    id="loginButton"
+                    class="button button-header"
+                    href="login.html"
+                    >Login</a
+                  >
+                </li>
+                <li id="registerNavItem" class="nav-item">
+                  <a
+                    id="registerButton"
+                    class="button button-header"
+                    href="register.html"
+                    >Register</a
+                  >
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </header>
+    <!--================ End Header Menu Area =================-->
+    <!-- ================ start banner area ================= -->
+    <section class="blog-banner-area" id="category">
+      <div class="container h-100">
+        <div class="blog-banner">
+          <div class="text-center">
+            <h1>Product Checkout</h1>
+            <nav aria-label="breadcrumb" class="banner-breadcrumb">
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">
+                  Checkout
+                </li>
+              </ol>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- ================ end banner area ================= -->
+
+    <!--================Checkout Area =================-->
+    <section class="checkout_area section-margin--small">
+      <div class="container">
+        <div class="billing_details">
+          <div class="row">
+            <div class="col-lg-8">
+              <h3>Billing Details</h3>
+              <form method="post" id="checkForm" class="row contact_form">
+                <div class="col-md-2 form-group p_star">
+                  <label class="form-label">Flat No.</label>
+                  <input
+                    type="number"
+                    class="form-control"
+                    name="flatNo"
+                    required
+                  />
+                </div>
+                <div class="col-md-2 form-group p_star">
+                  <label class="form-label">Building No.</label>
+                  <input
+                    type="number"
+                    class="form-control"
+                    name="buildingNo"
+                    required
+                  />
+                </div>
+                <div class="col-md-8 form-group p_star">
+                  <label class="form-label">Street</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="street"
+                    required
+                  />
+                </div>
+                <div class="col-md-6 form-group p_star">
+                  <label class="form-label">City</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="city"
+                    required
+                  />
+                </div>
+                <div class="col-md-6 form-group p_star">
+                  <label class="form-label">Country</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="country"
+                    required
+                  />
+                </div>
+                <!--  -->
+                <div class="col-md-6 form-group p_star">
+                  <label class="form-label">Phone number.</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="phone"
+                    required
+                  />
+                </div>
+                <div class="col-md-6 form-group p_star">
+                  <label class="form-label">Email Address</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="email"
+                    required
+                  />
+                </div>
+
+                <div class="col-md-12 form-group p_star">
+                  <label class="form-label">Credit Card Holder Name</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="creditCardHolderName"
+                    required
+                  />
+                </div>
+
+                <div class="col-md-4 form-group p_star">
+                  <label class="form-label">Payment Method</label>
+                  <select class="country_select" name="creditCardType">
+                    <option value="Visa">VISA</option>
+                    <option value="MasterCard">Master Card</option>
+                    <option value="Meeza">Meeza - Only In Egypt</option>
+                  </select>
+                </div>
+                <div class="col-md-8 form-group p_star">
+                  <label class="form-label">
+                    <i class="ti-credit-card"></i> Credit Card Number</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="creditCardNumber"
+                    required
+                  />
+                </div>
+                <!--  -->
+                <div class="col-md-6 form-group p_star">
+                  <label class="form-label d-block">Exp. Date</label>
+                  <input
+                    type="number"
+                    maxlength="2"
+                    class="form-control col-md-4 d-inline"
+                    name="expMonth"
+                    required
+                  />
+                  <h3 class="d-inline">/</h3>
+                  <input
+                    type="number"
+                    maxlength="2"
+                    class="form-control col-md-4 d-inline"
+                    name="expYear"
+                    required
+                  />
+                </div>
+                <div class="col-md-4 form-group p_star">
+                  <label class="form-label">CVV</label>
+                  <input
+                    type="number"
+                    maxlength="3"
+                    class="form-control"
+                    name="cvv"
+                    required
+                  />
+                </div>
+                <button type="submit" class="btn btn-primary">send</button>
+              </form>
+            </div>
+            <!-- <div class="col-lg-4">
+              <div class="order_box">
+                <h2>Your Order</h2>
+                <ul class="list">
+                  <li>
+                    <a href="#">
+                      <h4>Product <span>Total</span></h4>
+                    </a>
+                  </li>
+                </ul>
+                <ul class="list list_2">
+                  <li>
+                    <a href="#"
+                      >Subtotal
+                      <span
+                        >$
+                        <?php echo $orderSubtotal ?></span
+                      ></a
+                    >
+                  </li>
+                  <li>
+                    <a href="#">Shipping <span>Flat rate: $50.00</span></a>
+                  </li>
+                  <li>
+                    <a href="#"
+                      >Total
+                      <span
+                        >$
+                        <?php echo $orderSubtotal+50 ?></span
+                      ></a
+                    >
+                  </li>
+                </ul>
+              </div>
+            </div> -->
+          </div>
+        </div>
+      </div>
+    </section>
+    <!--================End Checkout Area =================-->
+
+    <!--================ End =================-->
+
+    <!-- footer -->
+    <!--================ Start footer Area  =================-->
+    <footer class="footer">
+      <div class="footer-area">
+        <div class="container">
+          <div class="row section_gap">
+            <div class="col-lg-3 col-md-6 col-sm-6">
+              <div class="single-footer-widget tp_widgets">
+                <h4 class="footer_title large_title">Our Mission</h4>
+                <p>
+                  So seed seed green that winged cattle in. Gathering thing made
+                  fly you're no divided deep moved us lan Gathering thing us
+                  land years living.
+                </p>
+                <p>
+                  So seed seed green that winged cattle in. Gathering thing made
+                  fly you're no divided deep moved
+                </p>
+              </div>
+            </div>
+            <div class="offset-lg-1 col-lg-2 col-md-6 col-sm-6">
+              <div class="single-footer-widget tp_widgets">
+                <h4 class="footer_title">Quick Links</h4>
+                <ul class="list">
+                  <li><a href="index.html">Home</a></li>
+                  <li><a href="products.php">Shop</a></li>
+                  <li><a href="fav-products.php">Favourites</a></li>
+                  <li><a href="watchlist.php">Watch List</a></li>
+                </ul>
+              </div>
+            </div>
+            <div class="offset-lg-1 col-lg-3 col-md-6 col-sm-6">
+              <div class="single-footer-widget tp_widgets">
+                <h4 class="footer_title">Contact Us</h4>
+                <div class="ml-40">
+                  <p class="sm-head">
+                    <span class="fa fa-location-arrow"></span>
+                    Head Office
+                  </p>
+                  <p>123, Main Street, Your City</p>
+
+                  <p class="sm-head">
+                    <span class="fa fa-phone"></span>
+                    Phone Number
+                  </p>
+                  <p>
+                    +123 456 7890 <br />
+                    +123 456 7890
+                  </p>
+
+                  <p class="sm-head">
+                    <span class="fa fa-envelope"></span>
+                    Email
+                  </p>
+                  <p>
+                    free@infoexample.com <br />
+                    www.infoexample.com
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div class="container">
+          <div class="row d-flex">
+            <p class="col-lg-12 footer-text text-center">
+              <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+              Copyright &copy;
+              <script>
+                document.write(new Date().getFullYear());
+              </script>
+              All rights reserved | This project is made with
+              <i class="fa fa-heart" aria-hidden="true"></i>
+              <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+            </p>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <!--================ End footer Area  =================-->
+    <script src="asstes/vendors/jquery/jquery-3.2.1.min.js"></script>
+    <script src="asstes/vendors/bootstrap/bootstrap.bundle.min.js"></script>
+    <script src="asstes/vendors/skrollr.min.js"></script>
+    <script src="asstes/vendors/owl-carousel/owl.carousel.min.js"></script>
+    <script src="asstes/vendors/nice-select/jquery.nice-select.min.js"></script>
+    <script src="asstes/vendors/jquery.ajaxchimp.min.js"></script>
+    <script src="asstes/vendors/mail-script.js"></script>
+    <script src="asstes/js/main.js"></script>
+    <script src="asstes/js/project.js"></script>
+
+    <!-- new -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+      $("#checkForm").submit(function (event) {
+        event.preventDefault();
+        var form = new FormData($(this)[0]);
+        $.ajax({
+          url: "http://127.0.0.1:8081/order/bill",
+          method: "POST",
+          timeout: 0,
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+          processData: false,
+          mimeType: "multipart/form-data",
+          contentType: false,
+          data: form,
+          success: function (data) {
+            console.log(JSON.parse(data));
+            data = JSON.parse(data)
+            console.log(data["order"]["id"]);
+            orderId = data["order"]["id"]
+            window.location.href = "confirmation.html?order="+orderId;
+          },
+          error: function (data) {
+            alertIfErrores(data.responseJSON)
+            console.log("error");
+            console.log(data);
+          },
+        });
+      });
+    </script>
+  </body>
+</html>
