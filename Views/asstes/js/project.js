@@ -83,3 +83,52 @@ if (token && isAdmin) {
 // else {
 //   showMessageAlert("you must login first");
 // }
+
+
+
+$(document).ready(function() {
+  // Disable other size options when "None" is checked
+  $('#size_none').change(function() {
+    if ($(this).is(':checked')) {
+      $('.size-option').prop('disabled', true);
+    } else {
+      $('.size-option').prop('disabled', false);
+    }
+  });
+
+  // Disable other color options when "All" is checked
+  $('.color-option').change(function() {
+    if ($('#color_check_all').is(':checked')) {
+      $('.color-option').not(this).prop('disabled', true);
+    } else {
+      $('.color-option').prop('disabled', false);
+    }
+  });
+
+  // Disable other type options when "All" is checked
+  $('.type-option').change(function() {
+    if ($('#type_check_all').is(':checked')) {
+      $('.type-option').not(this).prop('disabled', true);
+    } else {
+      $('.type-option').prop('disabled', false);
+    }
+  });
+
+  // Check/uncheck all sizes
+  $('#size_check_all').change(function() {
+    var isChecked = $(this).is(':checked');
+    $('.size-option').prop('checked', isChecked).prop('disabled', isChecked);
+  });
+
+  // Check/uncheck all colors
+  $('#color_check_all').change(function() {
+    var isChecked = $(this).is(':checked');
+    $('.color-option').prop('checked', isChecked).prop('disabled', isChecked);
+  });
+
+  // Check/uncheck all types
+  $('#type_check_all').change(function() {
+    var isChecked = $(this).is(':checked');
+    $('.type-option').prop('checked', isChecked).prop('disabled', isChecked);
+  });
+});

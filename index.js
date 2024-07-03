@@ -1,4 +1,5 @@
 const express = require('express');
+const bodyParser = require('body-parser');
 const cors = require('cors');
 const router = express();
 const db = require ("./config/db");
@@ -6,6 +7,8 @@ require("dotenv").config();
 
 // router.use(cors()); 
 
+router.use(bodyParser.urlencoded({ extended: true }));
+router.use(bodyParser.json());
 
 
 
@@ -33,10 +36,15 @@ db.authenticate().then(() => {
   console.log("connect");
 })
 
-router.use("/api/product", require("./routes/ProductRoutes"));
+
+
 router.use("/api/user", require("./routes/UserRoutes"));
 router.use("/api/auth", require("./routes/Auth"));
 router.use("/api/admin", require("./routes/Admin"));
+router.use("/api/product", require("./routes/ProductRoutes"));
+router.use("/api/cart", require("./routes/CartRoutes"));
+router.use("/api/order", require("./routes/OrderRoutes"));
+
 
 
 

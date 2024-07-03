@@ -1,5 +1,7 @@
 const userValidator = require("../middleware/UserValidatorMW");
-const User = require("../models/UserModelDB");
+const { User } = require("../models/UserModelDB");
+const { Cart } = require("../models/CartModelDB");
+
 const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcrypt");
@@ -30,30 +32,34 @@ router.post("/", userValidator, async (req, res) => {
       // address: req.body.address,
       isAdmin: false
     });
+    
+    // Create a cart for non-admin users
+    if (!user.isAdmin) {
+      console.log('User is not an Admin');
+      await Cart.create({ UserId: user.id });
+    } else {
+      console.log('User is an Admin');
+    }
 
-    // const token = user.genAuthToken();
+    // Generate token
     const token = jwt.sign(
       { userid: user.id, isAdmin: user.isAdmin },
       process.env.JWT_SECRET,
       { expiresIn: "72h" }
     );
 
-    // Added Successfully
+    // Send response with token
     res.header("x-auth-token", token);
 
     const data = {
       token: token, // Replace with your attribute and value
       isAdmin: user.isAdmin
     };
-    res.status(200).send(data);
+    return res.status(200).send(data);
 
-
-    // res.status(200).send("user Added Successfully");
   } catch (err) {
-    for (let i in err.errors) {
-      console.log(err.errors[i].message);
-    }
-    res.status(400).send("data of user not added");
+    console.error('Error:', err.message);
+    res.status(400).send("Data of user not added");
   }
 });
 

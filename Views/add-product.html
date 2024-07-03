@@ -144,7 +144,7 @@
               </div>
 
               <div class="mb-3">
-                <label for="category" class="form-label">Category</label>
+                <label for="category" class="form-label" style="float: left;">Category</label>
                 <select
                   class="form-select"
                   name="category"
@@ -161,38 +161,69 @@
               <div class="row mb-3">
                 <div class="col">
                   <label for="size" class="form-label">Size</label>
-                  <select class="form-select" name="size" id="size" required>
-                    <option value="" selected>Select Size</option>
-                    <option value="none">No Size</option>
-                    <option value="S">Small</option>
-                    <option value="M">Medium</option>
-                    <option value="L">Large</option>
-                    <option value="XL">XLarge</option>
-                    <option value="XXL">XXLarge</option>
-                    <option value="XXXL">XXXLarge</option>
-                  </select>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="size_check_all" name="size[]" value="all">
+                    <label class="form-check-label" for="size_check_all">Check All</label>
+                  </div>
+
+                  <div class="form-check">
+                    <input class="form-check-input size-option" type="checkbox" id="size_s" name="size[]" value="S">
+                    <label class="form-check-label" for="size_s">Small</label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input size-option" type="checkbox" id="size_m" name="size[]" value="M">
+                    <label class="form-check-label" for="size_m">Medium</label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input size-option" type="checkbox" id="size_l" name="size[]" value="L">
+                    <label class="form-check-label" for="size_l">Large</label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input size-option" type="checkbox" id="size_xl" name="size[]" value="XL">
+                    <label class="form-check-label" for="size_xl">XLarge</label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input size-option" type="checkbox" id="size_xxl" name="size[]" value="XXL">
+                    <label class="form-check-label" for="size_xxl">XXLarge</label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input size-option" type="checkbox" id="size_xxxl" name="size[]" value="XXXL">
+                    <label class="form-check-label" for="size_xxxl">XXXLarge</label>
+                  </div>
                 </div>
                 <div class="col">
                   <label for="color" class="form-label">Color</label>
-                  <select class="form-select" name="color" id="color" required>
-                    <option value="" selected>Select Color</option>
-                    <option value="Black">Black</option>
-                    <option value="White">White</option>
-                    <option value="Red">Red</option>
-                    <option value="Green">Green</option>
-                    <option value="Blue">Blue</option>
-                  </select>
+                  <div class="form-check">
+                    <input class="form-check-input " type="checkbox" id="color_check_all" name="color[]" value="all">
+                    <label class="form-check-label" for="color_check_all">Check All</label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input color-option" type="checkbox" id="color_black" name="color[]" value="Black">
+                    <label class="form-check-label" for="color_black">Black</label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input color-option" type="checkbox" id="color_white" name="color[]" value="White">
+                    <label class="form-check-label" for="color_white">White</label>
+                  </div>
                 </div>
                 <div class="col">
                   <label for="type" class="form-label">Type</label>
-                  <select class="form-select" name="type" id="type" required>
-                    <option value="" selected>Select Type</option>
-                    <option value="Regular">Regular</option>
-                    <option value="Oversize">Oversize</option>
-                  </select>
+                  <div class="form-check">
+                    <input class="form-check-input " type="checkbox" id="type_check_all" name="type[]" value="all">
+                    <label class="form-check-label" for="type_check_all">Check All</label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input type-option" type="checkbox" id="type_regular" name="type[]" value="Regular">
+                    <label class="form-check-label" for="type_regular">Regular</label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input type-option" type="checkbox" id="type_oversize" name="type[]" value="Oversize">
+                    <label class="form-check-label" for="type_oversize">Oversize</label>
+                  </div>
                 </div>
               </div>
-
+              
+              
               <div class="mb-3">
                 <label for="description" class="form-label">Description</label>
                 <textarea
@@ -204,7 +235,7 @@
               </div>
 
               <div class="row mb-3">
-                <div class="col">
+                <!-- <div class="col">
                   <label for="quantity" class="form-label"
                     >Product Quantity</label
                   >
@@ -215,7 +246,7 @@
                     id="quantity"
                     required
                   />
-                </div>
+                </div> -->
                 <div class="col">
                   <label for="price" class="form-label">Product Price</label>
                   <div class="input-group">
@@ -243,6 +274,7 @@
                   type="file"
                   name="prodimg"
                   id="prodimg"
+                  multiple
                 />
               </div>
 

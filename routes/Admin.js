@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const auth = require("../middleware/AuthMWPermission");
-const User = require("../models/UserModelDB");
+const {User} = require("../models/UserModelDB");
 
 // auth -> authorization
 // update user role to admin

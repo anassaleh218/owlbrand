@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Aroma Shop - Home</title>
+    <title>Owl Brand - Home</title>
     <link rel="icon" href="asstes/img/Fevicon.png" type="image/png" />
     <link rel="stylesheet" href="asstes/vendors/bootstrap/bootstrap.min.css" />
     <link rel="stylesheet" href="asstes/vendors/fontawesome/css/all.css" />
@@ -33,8 +33,8 @@
         <nav class="navbar navbar-expand-lg navbar-light">
           <div class="container" style="min-width: 1220px">
             <a class="navbar-brand logo_h" href="index.html">
-              <!-- <img src="asstes/img/logo.png" alt=""> -->
-              <h3 class="title">E-Shopping</h3>
+              <!-- <img src="asstes/img/logo.jpg" alt="" style="width: 100px"> -->
+              <h3 class="title">Owl Brand</h3>
             </a>
 
             <div
@@ -365,7 +365,7 @@
         <div class="col-md-6 col-lg-4">
           <div class="card text-center card-product">
             <div class="card-product__img">
-              <img class="card-img" width="500" src="images/${product.img_url}" style="width: 200px;height: 250px;object-fit: cover;" alt="">
+              <img class="card-img" width="500" src="images/${product.img_urls[0]}" style="width: 200px;height: 250px;object-fit: cover;" alt="">
               <ul class="card-product__imgOverlay">
                 <li>
                   <form class="addtocart" method="post">
@@ -396,30 +396,35 @@
       }
       updateTable();
       
-      // $(document).on("submit", ".addtocart", async function (event) {
-      //   event.preventDefault();
+            // Use event delegation to handle form submission
+            $(document).on("submit", ".addtocart", async function (event) {
+    event.preventDefault();
 
-      //   const url = "http://localhost:3000/cart/add";
-      //   const formData = $(this).serializeArray();
-      //   const data = {};
+    const url = "http://127.0.0.1:3000/api/cart";
+    const formData = $(this).serializeArray();
+    const data = {};
 
-      //   formData.forEach((item) => {
-      //     data[item.name] = item.value;
-      //   });
+    formData.forEach((item) => {
+        data[item.name] = item.value;
+    });
 
-      //   try {
-      //     const response = await axios.post(url, data, {
-      //       headers: {
-      //         "x-auth-token": token,
-      //       },
-      //       contentType: "application/json",
-      //     });
-      //     console.log(response.data);
-      //     updateTable();
-      //   } catch (error) {
-      //     console.error("Error adding to cart:", error);
-      //   }
-      // });
+    // Debugging: Log the serialized data
+    console.log('Serialized Data:', data);
+
+    try {
+        const response = await axios.post(url, data, {
+            headers: {
+                "x-auth-token": token,
+                "Content-Type": "application/json",  // Ensure we send JSON data
+            }
+        });
+        console.log(response.data);
+        updateTable(); // Ensure this function exists and updates your UI as needed
+    } catch (error) {
+        console.error("Error adding to cart:", error);
+    }
+});
+
     </script>
   </body>
 </html>

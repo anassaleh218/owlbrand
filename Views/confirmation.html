@@ -76,8 +76,7 @@
                 <li class="nav-item">
                   <button>
                     <a href="cart.html">
-                      <i class="ti-shopping-cart"></i
-                      >
+                      <i class="ti-shopping-cart"></i>
                     </a>
                   </button>
                 </li>
@@ -131,9 +130,7 @@
         <p class="text-center billing-alert">
           Thank you. Your order has been received.
         </p>
-        <div class="row mb-5" id="data">
-
-        </div>
+        <div class="row mb-5" id="data"></div>
         <div class="order_details_table">
           <h2>Order Details</h2>
           <div class="table-responsive">
@@ -145,9 +142,7 @@
                   <th scope="col">Total</th>
                 </tr>
               </thead>
-               <tbody id="details">
-   
-              </tbody>
+              <tbody id="details"></tbody>
             </table>
           </div>
         </div>
@@ -252,169 +247,152 @@
 
     <!-- new -->
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
     <script>
-      function updateTable() {
-        $("#card").empty();
-        const urlParams = new URLSearchParams(window.location.search);
-        const category = urlParams.get("order");
-        if (category) {
-          var url = "http://127.0.0.1:8081/order/confirmation/" + category;
-        }
-        $.ajax({
-          url: url,
-          type: "GET",
-          datatype: "json",
-          // headers: {
-          //   Authorization: "Bearer " + token,
-          // },
-          success: function (data) {
-            console.log(data["order"]);
-            console.log(data["orderBill"][0]);
-            console.log(data["orderProduct"]);
-            total = 0;
-            data["orderProduct"].forEach(order => {
-              product = order.product
-              console.log(product)
-              total += product.price* order.quantity
-              d = `<tr>
-                  <td>
-                    <p>${product.name}</p>
-                  </td>
-                  <td>
-                    <h5>
-                      x
-                      ${order.quantity}
-                    </h5>
-                  </td>
-                  <td>
-                    <p>
-                      $
-                      ${product.price* order.quantity}
-                    </p>
-                  </td>
-                </tr>`
-          $("#details").append(d);
-    
-            });
-            console.log(total)
-            var cardHtml = `<div class="col-md-6 col-xl-4 mb-4 mb-xl-0">
-            <div class="confirmation-card p-3">
-              <h3 class="billing-title">Order Info</h3>
-              <table class="order-rable">
-                <tr>
-                  <td>Order number</td>
-                  <td>
-                    :
-                    ${data["order"]["id"]}
-                  </td>
-                </tr>
-                <tr>
-                  <td>Order Status</td>
-                  <td>
-                    :
-                    ${data["order"]["orderStatus"]}
-                  </td>
-                </tr>
-                <tr>
-                  <td>Total</td>
-                  <td>: ${total}</td>
-                </tr>
-              </table>
-            </div>
-          </div>
+async function updateTable() {
+    $("#card").empty(); // Clear any existing content
 
-          <div class="col-md-6 col-xl-4 mb-4 mb-xl-0">
-            <div class="confirmation-card p-3">
-              <h3 class="billing-title">Billing Address</h3>
-              <table class="order-rable">
-                <tr>
-                  <td>Flat No</td>
-                  <td>
-                    :
-                    ${data["orderBill"][0]["flatNo"]}
-                  </td>
-                </tr>
-                <tr>
-                  <td>Building No</td>
-                  <td>
-                    :
-                    ${data["orderBill"][0]["buildingNo"]}
-                  </td>
-                </tr>
-                <tr>
-                  <td>Street</td>
-                  <td>
-                    :
-                    ${data["orderBill"][0]["street"]}
-                  </td>
-                </tr>
-                <tr>
-                  <td>City</td>
-                  <td>
-                    :
-                    ${data["orderBill"][0]["city"]}
-                  </td>
-                </tr>
-                <tr>
-                  <td>Country</td>
-                  <td>
-                    :
-                    ${data["orderBill"][0]["country"]}
-                  </td>
-                </tr>
-              </table>
-            </div>
-          </div>
+    const urlParams = new URLSearchParams(window.location.search);
+    const OrderId = urlParams.get("order");
 
-          <div class="col-md-6 col-xl-4 mb-4 mb-xl-0">
-            <div class="confirmation-card p-2 mb-2">
-              <h3 class="billing-title">Payment Details</h3>
-              <table class="order-rable">
-                <tr>
-                  <td>Credit Card Type</td>
-                  <td>
-                    :
-                    ${data["orderBill"][0]["creditCardType"]}
-                  </td>
-                </tr>
-                <tr>
-                  <td>Credit Card Holder Name</td>
-                  <td>
-                    :
-                    ${data["orderBill"][0]["creditCardHolderName"]}
-                  </td>
-                </tr>
-              </table>
-            </div>
-            <div class="confirmation-card p-2">
-              <h3 class="billing-title">Contact Details</h3>
-              <table class="order-rable">
-                <tr>
-                  <td>Phone Number</td>
-                  <td>
-                    :
-                    ${data["orderBill"][0]["phone"]}
-                  </td>
-                </tr>
-                <tr>
-                  <td>Email</td>
-                  <td>
-                    :
-                    ${data["orderBill"][0]["email"]}
-                  </td>
-                </tr>
-              </table>
-            </div>
-          </div>`
-          $("#data").append(cardHtml);
-          },
-          error: function () {
-            console.log("error happened");
-          },
+    if (!OrderId) {
+        console.error("Order ID not found in URL parameters.");
+        return;
+    }
+
+    const url = `http://127.0.0.1:3000/api/order/${OrderId}`;
+    try {
+        const response = await axios.get(url, {
+            headers: {
+                "x-auth-token": token, // Replace 'token' with your actual JWT token
+            },
         });
-      }
-      updateTable();
+
+        const data = response.data;
+
+        // Generate HTML for order products
+        let productsHtml = '';
+        for (const orderProduct of data.order.orderProducts) {
+            const product = orderProduct.Product;
+            productsHtml += `
+                <tr>
+                    <td>
+                        <p>${product.name}</p>
+                    </td>
+                    <td>
+                        <h5>x ${orderProduct.quantity}</h5>
+                    </td>
+                    <td>
+                        <p>$ ${product.price * orderProduct.quantity}</p>
+                    </td>
+                </tr>`;
+        }
+
+        productsHtml += `                <tr>
+                    <td>
+                        <p></p>
+                    </td>
+                    <td>
+                        <h5></h5>
+                    </td>
+                    <td>
+                        <p>$ ${data.totalCost}</p>
+                    </td>
+                </tr>`;
+
+        // Calculate total cost
+        let total = 0;
+        for (const orderProduct of data.order.orderProducts) {
+            const product = orderProduct.Product;
+            total += product.price * orderProduct.quantity;
+        }
+
+        // Generate HTML for order info
+        const cardHtml = `
+            <div class="col-md-6 col-xl-4 mb-4 mb-xl-0">
+                <div class="confirmation-card p-3">
+                    <h3 class="billing-title">Order Info</h3>
+                    <table class="order-rable">
+                        <tr>
+                            <td>Order number</td>
+                            <td>: ${data.order.id}</td>
+                        </tr>
+                        <tr>
+                            <td>Order Status</td>
+                            <td>: ${data.order.order_status}</td>
+                        </tr>
+                        <tr>
+                            <td>Total</td>
+                            <td>: ${total}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="col-md-6 col-xl-4 mb-4 mb-xl-0">
+                <div class="confirmation-card p-3">
+                    <h3 class="billing-title">Billing Address</h3>
+                    <table class="order-rable">
+                        <tr>
+                            <td>Flat No</td>
+                            <td>: ${data.flatNo}</td>
+                        </tr>
+                        <tr>
+                            <td>Building No</td>
+                            <td>: ${data.buildingNo}</td>
+                        </tr>
+                        <tr>
+                            <td>Street</td>
+                            <td>: ${data.street}</td>
+                        </tr>
+                        <tr>
+                            <td>City</td>
+                            <td>: ${data.city}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="col-md-6 col-xl-4 mb-4 mb-xl-0">
+                <div class="confirmation-card p-3">
+                    <h3 class="billing-title">Payment Details</h3>
+                    <table class="order-rable">
+                        <tr>
+                            <td>Credit Card Type</td>
+                            <td>: ${data.creditCardType}</td>
+                        </tr>
+                        <tr>
+                            <td>Credit Card Holder Name</td>
+                            <td>: ${data.creditCardHolderName}</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="confirmation-card p-3">
+                    <h3 class="billing-title">Contact Details</h3>
+                    <table class="order-rable">
+                        <tr>
+                            <td>Phone Number</td>
+                            <td>: ${data.phone1}</td>
+                        </tr>
+                        <tr>
+                            <td>Email</td>
+                            <td>: ${data.email}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>`;
+
+        // Append the generated HTML to the DOM
+        $("#data").append(cardHtml);
+        $("#details").append(productsHtml);
+
+    } catch (error) {
+        console.error("Error fetching order details:", error);
+    }
+}
+
+updateTable();
+
     </script>
   </body>
 </html>

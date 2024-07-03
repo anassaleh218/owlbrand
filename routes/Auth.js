@@ -1,5 +1,5 @@
 const Validator = require("../middleware/AuthValidatorMW");
-const User = require("../models/UserModelDB");
+const {User} = require("../models/UserModelDB");
 const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcrypt");

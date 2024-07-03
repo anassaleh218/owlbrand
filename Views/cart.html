@@ -77,8 +77,7 @@
                 <li class="nav-item">
                   <button>
                     <a href="cart.html">
-                      <i class="ti-shopping-cart"></i
-                      >
+                      <i class="ti-shopping-cart"></i>
                     </a>
                   </button>
                 </li>
@@ -140,6 +139,13 @@
                   <th scope="col">Price</th>
                   <th scope="col">Quantity</th>
                   <th scope="col">Total</th>
+                  <th scope="col">
+                    <form class="emptycart">
+                      <button type="submit" class="btn btn-danger">
+                        Remove All
+                      </button>
+                    </form>
+                  </th>
                   <!-- <th scope="col">Remove</th> -->
                 </tr>
               </thead>
@@ -157,7 +163,7 @@
                         >Continue Shopping</a
                       >
                       <form id="order" method="post">
-                        <button class="btn primary-btn ml-2" type="submit">
+                        <button class="btn btn-primary ml-2" type="submit">
                           Proceed to checkout
                         </button>
                       </form>
@@ -316,81 +322,144 @@
 
     <!-- new -->
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
     <script>
-      function updateTable() {
-        $("#card").empty();
+      async function updateTable() {
+        $("#cartItems").empty(); // Ensure this matches the actual element ID in your HTML
 
-        var url = "http://127.0.0.1:8081/cart/cartprods";
+        var url = "http://127.0.0.1:3000/api/cart";
 
-        $.ajax({
-          url: url,
-          type: "GET",
-          datatype: "json",
-          headers: {
-            Authorization: "Bearer " + token,
-          },
-          success: function (data) {
-            console.log(data);
-            for (i = 0; i < data.length; i++) {
-              var cardHtml = `
+        try {
+          const response = await axios.get(url, {
+            headers: {
+              "x-auth-token": token,
+            },
+          });
+          const data = response.data;
+          var totalCost=0;
+          
+          for (const item of data) {
+            totalCost = totalCost + (item.Product.price * item.quantity);
+            totalCost.toFixed(2);
+
+            const cardHtml = `
                 <tr>
                     <td>
-                        <img src="imgs/${
-                          data[i]["product"].img
+                        <img src="images/${
+                          item.Product.img_urls[0]
                         }" width="150" alt="">
                     </td>
                     <td>
-                        <p>${data[i]["product"].name}</p>
+                        <p>${item.Product.name}</p>
                     </td>
                     <td>
-                        <h5>$${data[i]["product"].price}</h5>
+                        <h5>$${item.Product.price}</h5>
                     </td>
                     <td>
-                        <h5>${data[i]["quantity"]}</h5>
+                        <h5>${item.quantity}</h5>
                     </td>
                     <td>
-                        <h5>$${
-                          data[i]["product"].price * data[i]["quantity"]
-                        }</h5>
+                        <h5>$${(item.Product.price * item.quantity).toFixed(
+                          2
+                        )}</h5>
                     </td>
-                    <!--       <td>
-                        <a class="btn btn-danger" href="cart.php?id=${
-                          data[i]["product"].id
-                        }">Remove</a>
+                   <td>
+                        <form class="deleteitem" data-productid="${
+                          item.ProductId
+                        }">
+                            <button type="submit" class="btn btn-danger">Remove</button>
+                        </form>
                     </td>
-                  -->
+                    
                 </tr>
             `;
-              $("#cartItems").append(cardHtml);
-            }
-          },
-          error: function () {
-            console.log("error happened");
-          },
-        });
+            $("#cartItems").append(cardHtml);
+          }
+          const total = `
+                <tr>
+                    <td>
+                        <p>Total Cost = </p>
+                    </td>
+                    <td>
+                        <p>${totalCost}</p>
+                    </td>`;
+          $("#cartItems").append(total);
+
+        } catch (error) {
+          console.error("Error fetching cart items:", error);
+        }
       }
+
+      // Call the function to update the table
       updateTable();
 
-      $("#order").submit(function (event) {
+      $(document).on("submit", ".emptycart", async function (event) {
         event.preventDefault();
-        $.ajax({
-          url: "http://127.0.0.1:8081/order/add",
-          type: "POST",
-          datatype: "json",
-          headers: {
-            Authorization: "Bearer " + token,
-          },
-          success: function (data) {
-            showMessageAlert("added", "success");
-            window.location.href = "checkout.html";
-          },
-          error: function () {
-            console.log("error");
-            console.log(data);
-          },
-        });
+
+        const url = "http://127.0.0.1:3000/api/cart";
+
+        try {
+          const response = await axios.delete(url, {
+            headers: {
+              "x-auth-token": token,
+            },
+          });
+
+          if (response.status === 200) {
+            console.log("Cart emptied successfully");
+            updateTable(); // Refresh the table to show the updated cart items
+          } else {
+            console.log("Failed to empty the cart");
+          }
+        } catch (error) {
+          console.error("Error emptying the cart:", error);
+        }
       });
+
+      $(document).on("submit", ".deleteitem", async function (event) {
+        event.preventDefault();
+
+        const productId = $(this).data("productid");
+        const url = `http://127.0.0.1:3000/api/cart/${productId}`;
+
+        try {
+          const response = await axios.delete(url, {
+            headers: {
+              "x-auth-token": token,
+            },
+          });
+
+          if (response.status === 200) {
+            console.log("Item removed successfully");
+            updateTable(); // Refresh the table to show the updated cart items
+          } else {
+            console.log("Failed to remove the item");
+          }
+        } catch (error) {
+          console.error("Error removing the item:", error);
+        }
+      });
+////////////
+      $("#order").submit(async function (event) {
+        event.preventDefault();
+        const url = "http://127.0.0.1:3000/api/order";
+
+        try {
+        const response = await axios.post(url,{}, {
+            headers: {
+                "x-auth-token": token
+            }
+        });
+        console.log(response.data);
+        updateTable(); // Ensure this function exists and updates your UI as needed
+        window.location.href = "checkout.html";
+    } catch (error) {
+        console.error("Error adding to cart:", error);
+    }
+        });
+
     </script>
   </body>
 </html>

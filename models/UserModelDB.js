@@ -1,7 +1,9 @@
 const { DataTypes } = require("sequelize");
 const db = require("../config/db");
 
-module.exports = db.define("User", {
+const { Cart } = require("./CartModelDB")
+
+const User = db.define("User", {
   id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
@@ -43,27 +45,25 @@ module.exports = db.define("User", {
     allowNull: false,
     minlength: 5,
   },
-  // phone: {
-  //   type: DataTypes.STRING,
-  //   allowNull: false,
-  // },
-  // address: {
-  //   type: DataTypes.STRING,
-  //   allowNull: false,
-  // },
   isAdmin: {
     type: DataTypes.BOOLEAN,
     defaultValue: false
   }
 });
 
-// // problem: not sign _id
-// // userSchema.method("genAuthToken",()=>{
-// //   const token = jwt.sign({ userid: this._id }, process.env.JWT_SECRET, {expiresIn: "72h"});
-// //   return token;
-// // })
+User.hasOne(Cart, {
+  foreignKey: {
+    name: 'UserId',
+    allowNull: false,
+  },
+  onDelete: 'CASCADE',
+  onUpdate: 'CASCADE'
+});
 
-// // create Model
-// const User = mongoose.model("Users", userSchema);
-
-// module.exports = { User };
+Cart.belongsTo(User, {
+  foreignKey: {
+    name: 'UserId',
+    allowNull: false,
+  }
+});
+module.exports = { User };

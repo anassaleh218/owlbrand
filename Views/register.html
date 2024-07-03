@@ -308,19 +308,20 @@
               password,
             },
             {
-              headers: {
-                "x-auth-token": token,
-              },
+              // headers: {
+              //   "x-auth-token": token,
+              // },
               contentType: "application/json",
             }
           );
 
+          
           if (response.data.token && response.data.isAdmin !== undefined) {
             // Check for token and isAdmin existence
             document.cookie = `token=${response.data.token}`;
             document.cookie = `isAdmin=${response.data.isAdmin}`;
             window.location.href =
-              data.isAdmin === false ? "products.html" : "add-product.html";
+              response.data.isAdmin === false ? "products.html" : "add-product.html";
           }
 
           console.log(response.data);

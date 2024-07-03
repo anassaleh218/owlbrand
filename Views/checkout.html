@@ -77,8 +77,7 @@
                 <li class="nav-item">
                   <button>
                     <a href="cart.html">
-                      <i class="ti-shopping-cart"></i
-                      >
+                      <i class="ti-shopping-cart"></i>
                     </a>
                   </button>
                 </li>
@@ -134,167 +133,110 @@
             <div class="col-lg-8">
               <h3>Billing Details</h3>
               <form method="post" id="checkForm" class="row contact_form">
+                <div class="col-md-4 form-group p_star">
+                  <label class="form-label" for="name">Name</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="name"
+                    name="name"
+                    required
+                  />
+                </div>
+                <div class="col-md-4 form-group p_star">
+                  <label class="form-label" for="phone1">Phone number 1</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="phone1"
+                    name="phone1"
+                    minlength="11"
+                    maxlength="11"
+                    required
+                  />
+                </div>
+                <div class="col-md-4 form-group p_star">
+                  <label class="form-label" for="phone2"
+                    >Phone number 2 "optional"</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="phone2"
+                    name="phone2"
+                    minlength="11"
+                    maxlength="11"
+                  />
+                </div>
                 <div class="col-md-2 form-group p_star">
-                  <label class="form-label">Flat No.</label>
+                  <label class="form-label" for="flatNo">Flat No.</label>
                   <input
                     type="number"
                     class="form-control"
+                    id="flatNo"
                     name="flatNo"
                     required
                   />
                 </div>
                 <div class="col-md-2 form-group p_star">
-                  <label class="form-label">Building No.</label>
+                  <label class="form-label" for="floorNo">Floor No.</label>
                   <input
                     type="number"
                     class="form-control"
+                    id="floorNo"
+                    name="floorNo"
+                    required
+                  />
+                </div>
+                <div class="col-md-2 form-group p_star">
+                  <label class="form-label" for="buildingNo"
+                    >Building No.</label
+                  >
+                  <input
+                    type="number"
+                    class="form-control"
+                    id="buildingNo"
                     name="buildingNo"
                     required
                   />
                 </div>
-                <div class="col-md-8 form-group p_star">
-                  <label class="form-label">Street</label>
+                <div class="col-md-6 form-group p_star">
+                  <label class="form-label" for="street">Street</label>
                   <input
                     type="text"
                     class="form-control"
+                    id="street"
                     name="street"
                     required
                   />
                 </div>
                 <div class="col-md-6 form-group p_star">
-                  <label class="form-label">City</label>
+                  <label class="form-label" for="city">City</label>
                   <input
                     type="text"
                     class="form-control"
+                    id="city"
                     name="city"
                     required
                   />
                 </div>
                 <div class="col-md-6 form-group p_star">
-                  <label class="form-label">Country</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    name="country"
-                    required
-                  />
-                </div>
-                <!--  -->
-                <div class="col-md-6 form-group p_star">
-                  <label class="form-label">Phone number.</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    name="phone"
-                    required
-                  />
-                </div>
-                <div class="col-md-6 form-group p_star">
-                  <label class="form-label">Email Address</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    name="email"
-                    required
-                  />
-                </div>
-
-                <div class="col-md-12 form-group p_star">
-                  <label class="form-label">Credit Card Holder Name</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    name="creditCardHolderName"
-                    required
-                  />
-                </div>
-
-                <div class="col-md-4 form-group p_star">
-                  <label class="form-label">Payment Method</label>
-                  <select class="country_select" name="creditCardType">
-                    <option value="Visa">VISA</option>
-                    <option value="MasterCard">Master Card</option>
-                    <option value="Meeza">Meeza - Only In Egypt</option>
-                  </select>
-                </div>
-                <div class="col-md-8 form-group p_star">
-                  <label class="form-label">
-                    <i class="ti-credit-card"></i> Credit Card Number</label
+                  <label class="form-label" for="details"
+                    >Details of Address</label
                   >
                   <input
                     type="text"
                     class="form-control"
-                    name="creditCardNumber"
-                    required
-                  />
-                </div>
-                <!--  -->
-                <div class="col-md-6 form-group p_star">
-                  <label class="form-label d-block">Exp. Date</label>
-                  <input
-                    type="number"
-                    maxlength="2"
-                    class="form-control col-md-4 d-inline"
-                    name="expMonth"
-                    required
-                  />
-                  <h3 class="d-inline">/</h3>
-                  <input
-                    type="number"
-                    maxlength="2"
-                    class="form-control col-md-4 d-inline"
-                    name="expYear"
-                    required
-                  />
-                </div>
-                <div class="col-md-4 form-group p_star">
-                  <label class="form-label">CVV</label>
-                  <input
-                    type="number"
-                    maxlength="3"
-                    class="form-control"
-                    name="cvv"
-                    required
+                    id="details"
+                    name="details"
                   />
                 </div>
                 <button type="submit" class="btn btn-primary">send</button>
               </form>
             </div>
-            <!-- <div class="col-lg-4">
-              <div class="order_box">
-                <h2>Your Order</h2>
-                <ul class="list">
-                  <li>
-                    <a href="#">
-                      <h4>Product <span>Total</span></h4>
-                    </a>
-                  </li>
-                </ul>
-                <ul class="list list_2">
-                  <li>
-                    <a href="#"
-                      >Subtotal
-                      <span
-                        >$
-                        <?php echo $orderSubtotal ?></span
-                      ></a
-                    >
-                  </li>
-                  <li>
-                    <a href="#">Shipping <span>Flat rate: $50.00</span></a>
-                  </li>
-                  <li>
-                    <a href="#"
-                      >Total
-                      <span
-                        >$
-                        <?php echo $orderSubtotal+50 ?></span
-                      ></a
-                    >
-                  </li>
-                </ul>
-              </div>
-            </div> -->
+            <div class="col-lg-4" id="orderDetails">
+              <!-- js -->
+            </div>
           </div>
         </div>
       </div>
@@ -398,35 +340,117 @@
 
     <!-- new -->
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
     <script>
-      $("#checkForm").submit(function (event) {
+      async function orderDetails() {
+        const url = "http://127.0.0.1:3000/api/order";
+
+        try {
+          const response = await axios.get(url, {
+            headers: {
+              "x-auth-token": token,
+            },
+          });
+          const data = response.data;
+
+          // let totalCost = 0;
+          let totalCost = 60; //shipping
+          let productsHtml = "";
+
+          for (const item of data) {
+            totalCost += item.Product.price * item.quantity;
+            productsHtml += `
+                <li>
+                    <a href="#">
+                        ${item.Product.name} <span class="middle">x ${
+              item.quantity
+            }</span>
+                        <span class="last">$${(
+                          item.Product.price * item.quantity
+                        ).toFixed(2)}</span>
+                    </a>
+                </li>`;
+          }
+
+          const orderHtml = `
+            <div class="order_box">
+                <h2>Your Order</h2>
+                <ul class="list">
+                    <li><a href="#"><h4>Product <span>Total</span></h4></a></li>
+                    ${productsHtml}
+                </ul>
+                <ul class="list list_2">
+                    <li><a href="#">Subtotal <span>$${(totalCost - 60).toFixed(
+                      2
+                    )}</span></a></li>
+                    <li><a href="#">Shipping <span>Flat rate: $60.00</span></a></li>
+                    <li><a href="#">Total <span>$${totalCost.toFixed(
+                      2
+                    )}</span></a></li>
+                </ul>
+            </div>`;
+
+          $("#orderDetails").html(orderHtml); // Use html() instead of append() to replace existing content
+        } catch (error) {
+          console.error("Error fetching order details:", error);
+        }
+      }
+
+      // Call the function to load the order details
+      orderDetails();
+
+      $("#checkForm").submit(async function (event) {
         event.preventDefault();
-        var form = new FormData($(this)[0]);
-        $.ajax({
-          url: "http://127.0.0.1:8081/order/bill",
-          method: "POST",
-          timeout: 0,
-          headers: {
-            Authorization: "Bearer " + token,
-          },
-          processData: false,
-          mimeType: "multipart/form-data",
-          contentType: false,
-          data: form,
-          success: function (data) {
-            console.log(JSON.parse(data));
-            data = JSON.parse(data)
-            console.log(data["order"]["id"]);
-            orderId = data["order"]["id"]
-            window.location.href = "confirmation.html?order="+orderId;
-          },
-          error: function (data) {
-            alertIfErrores(data.responseJSON)
-            console.log("error");
-            console.log(data);
-          },
-        });
+
+        try {
+          // Fetch data to calculate total cost
+          const url = "http://127.0.0.1:3000/api/order";
+          const response = await axios.get(url, {
+            headers: {
+              "x-auth-token": token,
+            },
+          });
+          const data = response.data;
+
+          let totalCost = 60; // Default flat rate shipping
+          for (const item of data) {
+            totalCost += item.Product.price * item.quantity;
+          }
+
+          let OrderId= data[0].OrderId
+          // Prepare FormData and append necessary fields
+          const form = new FormData($(this)[0]);
+          form.append("totalCost", totalCost);
+          form.append("OrderId",OrderId );
+
+          // Debugging output to check FormData entries
+          // for (let pair of form.entries()) {
+          //   console.log(pair[0] + ": " + pair[1]);
+          // }
+
+          const formDataJson = {};
+          for (let pair of form.entries()) {
+            formDataJson[pair[0]] = pair[1];
+          }
+
+          // Submit the form data to create the order
+          const billUrl = "http://localhost:3000/api/order/bill";
+          const billResponse = await axios.post(billUrl, formDataJson, {
+            headers: {
+              "x-auth-token": token,
+            },
+            processData: false,
+            contentType: false,
+          });
+
+          console.log(billResponse.data); // Log the response data
+          window.location.href = `confirmation.html?order=${OrderId}`; // Redirect upon successful submission
+        } catch (error) {
+          console.error("Error creating order:", error);
+          // Handle specific errors here (e.g., display an error message to the user)
+        }
       });
     </script>
   </body>

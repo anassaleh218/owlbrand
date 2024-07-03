@@ -362,19 +362,19 @@
             },
           });
           const data = response.data;
-// style="background-color:black"
+          // style="background-color:black"
           for (const product of data) {
             const cardHtml = `
         <div class="col-md-6 col-lg-4" >
           <div class="card text-center card-product">
             <div class="card-product__img">
-              <img class="card-img" width="500" src="images/${product.img_url}" style="width: 200px;height: 250px;object-fit: cover;" alt="">
+              <img class="card-img" width="500" src="images/${product.img_urls[0]}" style="width: 200px;height: 250px;object-fit: cover;" alt="">
               <ul class="card-product__imgOverlay">
                 <li>
                   <form class="addtocart" method="post">
                     <input type="hidden" name="quantity" value="1">
                     <input type="hidden" name="productId" value="${product.id}">
-                    <button><i class="ti-shopping-cart"></i></button>
+                    <button type="submit"><i class="ti-shopping-cart"></i></button>
                   </form>
                 </li>
                 <li><a href=""><button><i class="fa-regular fa-bookmark"></i></button></a></li>
@@ -402,30 +402,34 @@
       updateTable();
 
       // Use event delegation to handle form submission
-      // $(document).on("submit", ".addtocart", async function (event) {
-      //   event.preventDefault();
+      $(document).on("submit", ".addtocart", async function (event) {
+    event.preventDefault();
 
-      //   const url = "http://127.0.0.1:8081/cart/add";
-      //   const formData = $(this).serializeArray();
-      //   const data = {};
+    const url = "http://127.0.0.1:3000/api/cart";
+    const formData = $(this).serializeArray();
+    const data = {};
 
-      //   formData.forEach((item) => {
-      //     data[item.name] = item.value;
-      //   });
+    formData.forEach((item) => {
+        data[item.name] = item.value;
+    });
 
-      //   try {
-      //     const response = await axios.post(url, data, {
-      //       headers: {
-      //         Authorization: `Bearer ${token}`,
-      //       },
-      //       contentType: "application/json",
-      //     });
-      //     console.log(response.data);
-      //     updateTable();
-      //   } catch (error) {
-      //     console.error("Error adding to cart:", error);
-      //   }
-      // });
+    // Debugging: Log the serialized data
+    console.log('Serialized Data:', data);
+
+    try {
+        const response = await axios.post(url, data, {
+            headers: {
+                "x-auth-token": token,
+                "Content-Type": "application/json",  // Ensure we send JSON data
+            }
+        });
+        console.log(response.data);
+        updateTable(); // Ensure this function exists and updates your UI as needed
+    } catch (error) {
+        console.error("Error adding to cart:", error);
+    }
+});
+
     </script>
   </body>
 </html>

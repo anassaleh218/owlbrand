@@ -78,8 +78,7 @@
                 <li class="nav-item">
                   <button>
                     <a href="cart.html">
-                      <i class="ti-shopping-cart"></i
-                      >
+                      <i class="ti-shopping-cart"></i>
                     </a>
                   </button>
                 </li>
@@ -233,12 +232,11 @@
 
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
-
     <script>
       const urlParams = new URLSearchParams(window.location.search);
       const prodValue = urlParams.get("prod");
 
-      const url="http://127.0.0.1:3000/api/product/prod/"+prodValue;
+      const url = "http://127.0.0.1:3000/api/product/prod/" + prodValue;
 
       async function updateTable() {
         $("#card").empty();
@@ -249,26 +247,30 @@
               "x-auth-token": token,
             },
           });
-          const data = response.data;
+          const product = response.data;
 
-          for (const product of data) {
-            const cardHtml = `<div class="row s_product_inner">
+          const cardHtml = `<div class="row s_product_inner">
 			<div class="col-lg-6">
-						<img class="img-fluid" src="images/${product.img_url}" alt="">
-			</div>
+        <div id="productImages" class="owl-carousel owl-theme">
+          <!-- Carousel items will be dynamically added here -->			
+        </div>
+        </div>
 			<div class="col-lg-5 offset-lg-1">
 				<div class="s_product_text">
 					<h3>${product.name}</h3>
 					<h2>$${product.price}</h2>
 					<ul class="list">
 						<li><span>category</span> : ${product.category}</li>
-						<li><span>Color</span> : ${product.color}</li>
+            <li><span>Type</span> : ${product.types}</li>
+            <li><span>Size</span> : ${product.sizes}</li>
+						<li><span>Color</span> : ${product.colors}</li>
+            
 
 						<?php if($product["size"]!= null){?>
 							<li><span>Size</span> : ${product.size}</li>
 						<?php }?>
 
-						<li><span>Availibility</span> : ${data["status"]}</li>
+						
 					</ul>
 
 					<p>description: ${product.description}</p>
@@ -276,15 +278,33 @@
 						<label for="qty">Quantity:</label>
 						<form class="addtocart">
 							<input type="number" name="quantity" size="2" maxlength="12" value="1" title="Quantity:" class="input-text qty">
-							<input type="hidden" name="id" value="${product.id}">
+							<input type="hidden" name="productId" value="${product.id}">
 							<button class="button primary-btn d-block mt-5">Add to Cart</button>
 						</form>
 					</div>
 				</div>
 			</div>
 		</div>`;
-    $("#card").append(cardHtml);
-          }
+          $("#card").append(cardHtml);
+
+          // Populate images in Owl Carousel
+          const images = product.img_urls.map(
+            (imgUrl) =>
+              `<div class="item"><img src="images/${imgUrl}" alt=""></div>`
+          );
+          $("#productImages").html(images.join(""));
+
+          // Initialize Owl Carousel with manual navigation buttons
+          $("#productImages").owlCarousel({
+            items: 1,
+            loop: false,
+            nav: true,
+            dots: false,
+            navText: [
+              '<i class="fa fa-chevron-left"></i>',
+              '<i class="fa fa-chevron-right"></i>',
+            ],
+          });
         } catch (error) {
           console.error("Error fetching products:", error);
         }
@@ -292,34 +312,35 @@
       updateTable();
 
       // Use event delegation to handle form submission
-      $(document).on("submit", ".addtocart", function (event) {
-        event.preventDefault();
-        var url = "http://127.0.0.1:8081/cart/add";
-        var formData = $(this).serializeArray();
-        var data = {};
-        // Convert form data array to JSON object
-        formData.forEach(function (item) {
-          data[item.name] = item.value;
-        });
+            // Use event delegation to handle form submission
+            $(document).on("submit", ".addtocart", async function (event) {
+    event.preventDefault();
 
-        $.ajax({
-          url: url,
-          type: "POST",
-          dataType: "json",
-          headers: {
-            Authorization: "Bearer " + token,
-          },
-          contentType: "application/json",
-          data: JSON.stringify(data), // Serialize data as JSON string
-          success: function (data) {
-            console.log(data);
-            updateTable();
-          },
-          error: function () {
-            console.log("error");
-          },
+    const url = "http://127.0.0.1:3000/api/cart";
+    const formData = $(this).serializeArray();
+    const data = {};
+
+    formData.forEach((item) => {
+        data[item.name] = item.value;
+    });
+
+    // Debugging: Log the serialized data
+    console.log('Serialized Data:', data);
+
+    try {
+        const response = await axios.post(url, data, {
+            headers: {
+                "x-auth-token": token,
+                "Content-Type": "application/json",  // Ensure we send JSON data
+            }
         });
-      });
+        console.log(response.data);
+        updateTable(); // Ensure this function exists and updates your UI as needed
+    } catch (error) {
+        console.error("Error adding to cart:", error);
+    }
+});
+
     </script>
   </body>
 </html>
