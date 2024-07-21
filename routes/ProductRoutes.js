@@ -1,6 +1,10 @@
 const { Product, Size, Color, Type } = require("../models/ProductModelDB");
+const {FavProducts,WatchList} = require("../models/FavWatchModelDB")
+
 const upload = require("../middleware/upload");
 const sequelize = require("../config/db");
+
+const { Op } = require('sequelize');
 // const ProductsController = require("../controllers/ProductControllerDB");
 
 // auth -> authorization
@@ -9,19 +13,27 @@ const auth = require("../middleware/AuthMWPermission");
 const express = require('express');
 const router = express.Router();
 
+const jwt = require("jsonwebtoken");
+
 // getAllProductsCategories
 router.get("/categories", async (req, res) => {
   try {
     // Get distinct category values using Sequelize
     const categories = await Product.findAll({
-      attributes: ["category"], // Select only the "category" attribute
+      attributes: [
+        "category",
+        [sequelize.fn("COUNT", sequelize.col("category")), "categoryCount"]
+      ],
       group: ["category"], // Group results by category for distinct values
     });
-
     // Extract category values from the results
-    const distinctCategories = categories.map(product => product.category);
+    const distinctCategories = categories.map(product => ({
+      category: product.category,
+      count: product.dataValues.categoryCount
+    }));
 
     res.status(200).send(distinctCategories);
+
   } catch (err) {
     console.error(err); // Log the complete error for debugging
     res.status(400).send("Error retrieving categories");
@@ -41,7 +53,7 @@ router.get("/category/:category", async (req, res) => {
     const transformedProducts = products.map(product => {
       // Clone the product data
       const productData = product.toJSON();
-      
+
       // Transform the img_url field from a string to an array
       if (productData.img_url) {
         productData.img_urls = productData.img_url.split(',');
@@ -83,7 +95,7 @@ router.get("/", async (req, res) => {
     const transformedProducts = products.map(product => {
       // Clone the product data
       const productData = product.toJSON();
-      
+
       // Transform the img_url field from a string to an array
       if (productData.img_url) {
         productData.img_urls = productData.img_url.split(',');
@@ -113,9 +125,7 @@ router.get("/prod/:id", async (req, res) => {
         id: req.params.id,
       },
     });
-    const color = await Color.findAll({where:{productId:product.id}})
-    const size = await Size.findAll({where:{productId:product.id}})
-    const type = await Type.findAll({where:{productId:product.id}})
+    
 
 
     if (!product) {
@@ -124,16 +134,11 @@ router.get("/prod/:id", async (req, res) => {
 
     // Clone the product data
     const productData = product.toJSON();
-    
+
     // Transform the img_url field from a string to an array
     productData.img_urls = productData.img_url ? productData.img_url.split(',') : [];
 
 
-    // Add color, size, and type arrays to the productData
-    productData.colors = color.map(c => c.color);
-    productData.sizes = size.map(s => s.size);
-    productData.types = type.map(t => t.type);
-    
     res.status(200).send(productData);
   } catch (err) {
     console.error(err); // Log the complete error for debugging
@@ -143,23 +148,11 @@ router.get("/prod/:id", async (req, res) => {
 
 
 
-// to make only admin add MW 
+// to make product - only admin can add - MW 
 // auth
 router.post("/", upload.array("prodimg", 10), auth, async (req, res) => {
-  let t;
   try {
-    console.log('Raw Request Body:', req.body);  // Log the raw request body
-
-    const types = req.body.type;
-    const sizes = req.body.size;
-    const colors = req.body.color;
-    console.log('Extracted types:', types);  // Log extracted types
-    console.log('Extracted sizes:', sizes);  // Log extracted sizes
-    console.log('Extracted colors:', colors);  // Log extracted colors
-
-    t = await sequelize.transaction();
     const imgUrls = req.files.map(file => file.filename);
-
     const prod = await Product.create({
       name: req.body.name,
       description: req.body.description,
@@ -167,53 +160,10 @@ router.post("/", upload.array("prodimg", 10), auth, async (req, res) => {
       img_url: imgUrls.join(','), // Save as comma-separated string
       // prodimg: req.body.path,
       category: req.body.category,
-      // quantity: req.body.quantity,
-    }, { transaction: t });
+    });
 
-    console.log('Product created with ID:', prod.id);  // Log product ID
-
-    // Sizes
-    if (Array.isArray(sizes) && sizes.length > 0) {
-      console.log('Sizes array is not empty:', sizes);
-      const sizePromises = sizes.map(size => {
-        console.log('Creating Size:', size, 'for Product ID:', prod.id);  // Log each size creation
-        return Size.create({ size, productId: prod.id }, { transaction: t });
-      });
-      await Promise.all(sizePromises);
-    } else {
-      console.log('Sizes array is empty or not defined');
-    }
-
-    // Colors
-    if (Array.isArray(colors) && colors.length > 0) {
-      console.log('Colors array is not empty:', colors);
-      const colorPromises = colors.map(color => {
-        console.log('Creating Color:', color, 'for Product ID:', prod.id);  // Log each color creation
-        return Color.create({ color, productId: prod.id }, { transaction: t });
-      });
-      await Promise.all(colorPromises);
-    } else {
-      console.log('Colors array is empty or not defined');
-    }
-
-    // Types
-    if (Array.isArray(types) && types.length > 0) {
-      console.log('Types array is not empty:', types);
-      const typePromises = types.map(type => {
-        console.log('Creating Type:', type, 'for Product ID:', prod.id);  // Log each type creation
-        return Type.create({ type, productId: prod.id }, { transaction: t });
-      });
-      await Promise.all(typePromises);
-    } else {
-      console.log('Types array is empty or not defined');
-    }
-
-    await t.commit();
     res.status(200).send("Product added successfully");
   } catch (err) {
-    if (t) {
-      await t.rollback();
-    }
     console.error('Error:', err);  // Log the complete error for debugging
     res.status(400).send("Product addition failed. Please check the request data.");
   }
@@ -228,4 +178,227 @@ router.post("/", upload.array("prodimg", 10), auth, async (req, res) => {
 // // deleteProductByID
 // router.delete("/:id", auth, ProductsController.deleteProductByID);
 
+
+// fav
+
+router.post("/fav", async (req, res) => {
+  const token = req.header("x-auth-token");
+  // if(!token) return res.status(401).send("Access Denied");
+  try {
+    const decodedPayload = jwt.verify(token, process.env.JWT_SECRET);
+    const userid = decodedPayload.userid;
+
+    const favProduct = await FavProducts.create({
+      UserId: userid,
+      ProductId: req.body.productId,
+    });
+
+    return res.status(200).send("Product added to your favorites successfully");
+  } catch (err) {
+    console.error('Error:', err.message);
+    res.status(400).send("Product NOT added to your favorites");
+  }
+});
+
+//
+router.get("/fav", async (req, res) => {
+
+  const token = req.header("x-auth-token");
+  // if(!token) return res.status(401).send("Access Denied");
+  try {
+      const decodedPayload = jwt.verify(token, process.env.JWT_SECRET);
+      const userid = decodedPayload.userid;
+
+      const favProducts = await FavProducts.findAll({
+          where: {
+              UserId: userid
+          },
+          include: [{
+              model: Product,
+              as: 'Product'
+          }]
+      });
+
+      // Convert the array of instances to plain JavaScript objects
+      const favProductsData = favProducts.map(favProduct => {
+          const favProductJSON = favProduct.toJSON();
+          // Transform the img_url field from a string to an array
+          favProductJSON.Product.img_urls = favProductJSON.Product.img_url ? favProductJSON.Product.img_url.split(',') : [];
+          return favProductJSON;
+      });
+
+      return res.status(200).json(favProductsData);
+
+
+      // return res.status(200).send("cart items retrieved successfully");
+
+  } catch (err) {
+      console.error('Error:', err.message);
+      res.status(400).send("cart items NOT retrieved");
+  }
+})
+//
+
+router.delete("/fav/:prodId", async (req, res) => {
+  const token = req.header("x-auth-token");
+  // if(!token) return res.status(401).send("Access Denied");
+  try {
+    const decodedPayload = jwt.verify(token, process.env.JWT_SECRET);
+    const userid = decodedPayload.userid;
+
+
+    const favProducts = await FavProducts.destroy({
+      where: {
+        UserId: userid,
+        ProductId: req.params.prodId,
+      }
+
+    });
+
+    return res.status(200).send("item deleted successfully");
+
+  } catch (err) {
+    console.error('Error:', err.message);
+    res.status(400).send("item NOT deleted");
+  }
+})
+
+
+// bookmark
+router.post("/watchlist", async (req, res) => {
+
+  const token = req.header("x-auth-token");
+  // if(!token) return res.status(401).send("Access Denied");
+  try {
+    const decodedPayload = jwt.verify(token, process.env.JWT_SECRET);
+    const userid = decodedPayload.userid;
+
+
+
+    const watchList = await WatchList.create({
+      UserId: userid,
+      ProductId: req.body.productId,
+
+    })
+
+
+    return res.status(200).send("products added to your Fav successfully");
+
+  } catch (err) {
+    console.error('Error:', err.message);
+    res.status(400).send("products NOT added to your Fav");
+  }
+});
+
+router.get("/watchlist", async (req, res) => {
+
+  const token = req.header("x-auth-token");
+  // if(!token) return res.status(401).send("Access Denied");
+  try {
+      const decodedPayload = jwt.verify(token, process.env.JWT_SECRET);
+      const userid = decodedPayload.userid;
+
+      const watchListItems = await WatchList.findAll({
+          where: {
+              UserId: userid
+          },
+          include: [{
+              model: Product,
+              as: 'Product'
+          }]
+      });
+
+      // Convert the array of instances to plain JavaScript objects
+      const watchListData = watchListItems.map(item => {
+        const itemJSON = item.toJSON();
+        // Transform the img_url field from a string to an array
+        itemJSON.Product.img_urls = itemJSON.Product.img_url ? itemJSON.Product.img_url.split(',') : [];
+        return itemJSON;
+      });
+  
+      return res.status(200).json(watchListData);
+
+      // return res.status(200).send("cart items retrieved successfully");
+
+  } catch (err) {
+      console.error('Error:', err.message);
+      res.status(400).send("cart items NOT retrieved");
+  }
+})
+
+router.delete("/watchlist/:prodId", async (req, res) => {
+
+  const token = req.header("x-auth-token");
+  // if(!token) return res.status(401).send("Access Denied");
+  try {
+    const decodedPayload = jwt.verify(token, process.env.JWT_SECRET);
+    const userid = decodedPayload.userid;
+
+
+    const watchList = await WatchList.destroy({
+      where: {
+        UserId: userid,
+        ProductId: req.params.prodId,
+      }
+
+    });
+
+    return res.status(200).send("item deleted successfully");
+
+  } catch (err) {
+    console.error('Error:', err.message);
+    res.status(400).send("item NOT deleted");
+  }
+})
+
+
+
+
+
+
+router.get('/searchsort', async (req, res) => {
+  const { search = '', sort_by = '', category = '' } = req.query;
+
+  let order = [];
+  if (sort_by === 'name_asc') order = [['name', 'ASC']];
+  if (sort_by === 'name_desc') order = [['name', 'DESC']];
+  if (sort_by === 'price_asc') order = [['price', 'ASC']];
+  if (sort_by === 'price_desc') order = [['price', 'DESC']];
+
+  try {
+    const products = await Product.findAll({
+      where: {
+        
+          category: category,
+        
+        name: {
+          [Op.like]: `%${search}%`
+        }
+      },
+      order
+    });
+
+    const transformedProducts = products.map(product => {
+      // Clone the product data
+      const productData = product.toJSON();
+
+      // Transform the img_url field from a string to an array
+      if (productData.img_url) {
+        productData.img_urls = productData.img_url.split(',');
+      } else {
+        productData.img_urls = [];
+      }
+
+      // // Remove the original img_url field if desired
+      // delete productData.img_url;
+
+      return productData;
+    });
+
+    res.status(200).send(transformedProducts);
+    // res.json(products);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
 module.exports = router;

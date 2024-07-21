@@ -19,6 +19,38 @@ function deleteCookie(cookieName) {
     cookieName + "=; Path=/Views; Expires=Thu, 01 Jan 1970 00:00:01 GMT;";
 }
 
+function showMessage(message, type) {
+  const messageContainer = $("#message-container");
+  const messageHtml = `
+    <div class="alert alert-${type}" role="alert">
+      ${message}
+    </div>
+  `;
+  messageContainer.html(messageHtml);
+
+  // Scroll to the top of the page
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  });
+
+  // Optional: Hide message after a few seconds
+  setTimeout(() => {
+    messageContainer.empty();
+  }, 5000);
+}
+
+$(document).ready(function () {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  });
+});
+
+
+
+
+
 function insertAfter(newNode, existingNode) {
   existingNode.parentNode.insertBefore(newNode, existingNode.nextSibling);
 }
@@ -56,14 +88,23 @@ function showMessageAlert(message, state = "danger") {
 
 var token = getCookie("token");
 var isAdmin = getCookie("isAdmin");
+var userName = getCookie("userName");
+
+
+if (userName) {
+  document.getElementById("userName").innerText = "Hi, " + userName;
+}
 
 if (token && isAdmin) {
   console.log(token);
   console.log(isAdmin);
+  //
   if (isAdmin == "true") {
     document.getElementById("add").style.display = "block";
-  }else{
+  } else {
+    document.getElementById("preferences").style.display = "block";
     document.getElementById("myOrders").style.display = "block";
+    document.getElementById("cartIcon").style.display = "block";
   }
   // Delete register button
   document.getElementById("registerNavItem").style.display = "none";
@@ -78,17 +119,18 @@ if (token && isAdmin) {
     // Code to delete token
     deleteCookie("token");
     deleteCookie("isAdmin");
+    deleteCookie("userName");
   }
-} 
+}
 // else {
 //   showMessageAlert("you must login first");
 // }
 
 
 
-$(document).ready(function() {
+$(document).ready(function () {
   // Disable other size options when "None" is checked
-  $('#size_none').change(function() {
+  $('#size_none').change(function () {
     if ($(this).is(':checked')) {
       $('.size-option').prop('disabled', true);
     } else {
@@ -97,7 +139,7 @@ $(document).ready(function() {
   });
 
   // Disable other color options when "All" is checked
-  $('.color-option').change(function() {
+  $('.color-option').change(function () {
     if ($('#color_check_all').is(':checked')) {
       $('.color-option').not(this).prop('disabled', true);
     } else {
@@ -106,7 +148,7 @@ $(document).ready(function() {
   });
 
   // Disable other type options when "All" is checked
-  $('.type-option').change(function() {
+  $('.type-option').change(function () {
     if ($('#type_check_all').is(':checked')) {
       $('.type-option').not(this).prop('disabled', true);
     } else {
@@ -115,20 +157,49 @@ $(document).ready(function() {
   });
 
   // Check/uncheck all sizes
-  $('#size_check_all').change(function() {
+  $('#size_check_all').change(function () {
     var isChecked = $(this).is(':checked');
     $('.size-option').prop('checked', isChecked).prop('disabled', isChecked);
   });
 
   // Check/uncheck all colors
-  $('#color_check_all').change(function() {
+  $('#color_check_all').change(function () {
     var isChecked = $(this).is(':checked');
     $('.color-option').prop('checked', isChecked).prop('disabled', isChecked);
   });
 
   // Check/uncheck all types
-  $('#type_check_all').change(function() {
+  $('#type_check_all').change(function () {
     var isChecked = $(this).is(':checked');
     $('.type-option').prop('checked', isChecked).prop('disabled', isChecked);
   });
 });
+
+
+
+async function cartIcon() {
+  try {
+    // Make the API request
+    const cartResponse = await axios.get("http://127.0.0.1:3000/api/cart", {
+      headers: {
+        "x-auth-token": token,  // Make sure 'token' is defined or passed correctly
+      },
+    });
+    // Check if the cart response is not null and has items
+    if (Array.isArray(cartResponse.data) && cartResponse.data.length > 0) {
+      // Change the class of the cart icon
+      const cartIconElement = document.getElementById("cartIcon");
+      if (cartIconElement) {
+        cartIconElement.className = "ti-shopping-cart-full";
+      }
+    }
+    else{
+      const cartIconElement = document.getElementById("cartIcon");
+      if (cartIconElement) {
+        cartIconElement.className = "ti-shopping-cart";
+      }
+    }
+  } catch (error) {
+    console.error("Error fetching cart data:", error);
+  }
+}

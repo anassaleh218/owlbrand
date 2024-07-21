@@ -27,6 +27,7 @@
   </head>
 
   <body>
+    <div id="message-container"></div>
     <!--================ Start Header Menu Area =================-->
     <header class="header_area">
       <div class="main_menu">
@@ -51,26 +52,24 @@
                 </li>
               </ul>
               <ul class="nav-shop">
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                   <button><i class="ti-search"></i></button>
-                </li>
+                </li> -->
                 <!-- ______________ -->
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                   <button>
                     <a href="cart.html">
                       <i class="ti-shopping-cart"></i>
                     </a>
                   </button>
-                </li>
+                </li> -->
                 <!-- ______________ -->
 
                 <li class="nav-item">
                   <a class="button button-header" href="login.html">Login</a>
                 </li>
                 <li class="nav-item">
-                  <a class="button button-header" href="register.html"
-                    >Register</a
-                  >
+                  <a class="button button-header" href="register.html">Register</a>
                 </li>
               </ul>
             </div>
@@ -259,6 +258,7 @@
     <script src="asstes/vendors/mail-script.js"></script>
     <script src="asstes/js/main.js"></script>
     <script src="asstes/js/project.js"></script>
+    <script src="asstes/js/auth.js"></script>
 
     <!-- new -->
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
@@ -270,46 +270,7 @@
         window.location.href = "products.html";
       }
 
-      $("#login").submit(async function (event) {
-        event.preventDefault();
-
-        const email = document.getElementById("email").value;
-        const password = document.getElementById("password").value;
-
-        try {
-          const response = await axios.post(
-            "http://localhost:3000/api/auth",
-            {
-              email,
-              password,
-            },
-            {
-              headers: {
-                "x-auth-token": token, // Include token if needed (check original code)
-              },
-              contentType: "application/json",
-            }
-          );
-
-          if (response.data.token && response.data.isAdmin !== undefined) {
-            // Check for token and isAdmin existence
-            document.cookie = `token=${response.data.token}`;
-            document.cookie = `isAdmin=${response.data.isAdmin}`;
-            // window.location.href =
-            //   data.isAdmin === "false" ? "products.html" : "add-product.html";
-            if (response.data.isAdmin === false) {
-              window.location.href = "products.html";
-            } else {
-              window.location.href = "add-product.html";
-            }
-          }
-
-          console.log(response.data);
-        } catch (error) {
-          console.error("Error logging in:", error);
-          // You can handle specific errors here (e.g., display an error message to the user)
-        }
-      });
+      
     </script>
   </body>
 </html>

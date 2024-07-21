@@ -34,7 +34,8 @@ router.post("/bill", async (req, res) => {
             street: req.body.street,
             city: req.body.city,
             details: req.body.details,
-            totalCost: req.body.totalCost
+            totalCost: req.body.totalCost,
+            paymentMethod:req.body.paymentMethod
         });
         res.status(200).send("order bill created successfully");
     } catch (err) {

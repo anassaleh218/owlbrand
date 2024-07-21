@@ -60,6 +60,10 @@ const OrderBilling = db.define('OrderBilling', {
     totalCost: {
         type: DataTypes.FLOAT,
         allowNull: false
+    },
+    paymentMethod:{
+        type: DataTypes.STRING,
+        allowNull: false
     }
 
 },

@@ -6,9 +6,9 @@ const schema = {
   properties: {
     name: {
       type: "string",
-      pattern: "^[A-Z][a-z]*$",
+      pattern: "^[A-Za-z]+( [A-Za-z]+)*$",
       minLength: 5,
-      maxLength: 15,
+      maxLength: 50,
     },
     email: { type: "string", pattern: ".+@.+..+" },
     password: { type: "string", minLength: 5 },
@@ -17,3 +17,4 @@ const schema = {
 };
 
 module.exports = ajv.compile(schema);
+

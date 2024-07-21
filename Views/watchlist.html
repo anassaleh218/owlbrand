@@ -25,8 +25,8 @@
       <nav class="navbar navbar-expand-lg navbar-light">
         <div class="container" style="min-width: 1220px">
           <a class="navbar-brand logo_h" href="index.html">
-            <!-- <img src="asstes/img/logo.png" alt=""> -->
-            <h3 class="title">E-Shopping</h3>
+            <!-- <img src="asstes/img/logo.jpg" alt="" style="width: 100px"> -->
+            <h3 class="title">Owl Brand</h3>
           </a>
 
           <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
@@ -57,24 +57,23 @@
               </li>
             </ul>
             <ul class="nav-shop">
-              <!-- <li class="nav-item">
-                <button><i class="ti-search"></i></button>
-              </li> -->
-              <li>
+
+              <li class="nav-item">
                 <p id="userName"></p>
               </li>
-              <!-- ______________ -->
+
               <li class="nav-item">
                 <button>
                   <a href="cart.html">
-                    <i class="ti-shopping-cart" id="cartIcon"></i>
+                    <i class="ti-shopping-cart" id="cartIcon" style="display: none"></i>
                   </a>
                 </button>
               </li>
-              <!-- ______________ -->
+
               <li id="loginNavItem" class="nav-item">
                 <a id="loginButton" class="button button-header" href="login.html">Login</a>
               </li>
+
               <li id="registerNavItem" class="nav-item">
                 <a id="registerButton" class="button button-header" href="register.html">Register</a>
               </li>
@@ -90,13 +89,12 @@
     <div class="container h-100">
       <div class="blog-banner">
         <div class="text-center">
-          <h1>Shopping Cart</h1>
+          <h1>Shop Category</h1>
           <nav aria-label="breadcrumb" class="banner-breadcrumb">
             <ol class="breadcrumb">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-
               <li class="breadcrumb-item active" aria-current="page">
-                Shopping Cart
+                Shop Category
               </li>
             </ol>
           </nav>
@@ -106,55 +104,54 @@
   </section>
   <!-- ================ end banner area ================= -->
 
-  <!--================Cart Area =================-->
-  <section class="cart_area">
+  <!-- ================ category section start ================= -->
+  <section class="section-margin--small mb-5">
     <div class="container">
-      <div class="cart_inner">
-        <div class="table-responsive">
-          <table class="table">
-            <thead>
-              <tr>
-                <th scope="col">Product Image</th>
-                <th scope="col">Name</th>
-                <th scope="col">Price</th>
-                <th scope="col">Quantity</th>
-                <th scope="col">Total</th>
-                <th scope="col">
-                  <form class="emptycart">
-                    <button type="submit" class="btn btn-danger">
-                      Remove All
-                    </button>
-                  </form>
-                </th>
-                <!-- <th scope="col">Remove</th> -->
-              </tr>
-            </thead>
-            <tbody id="cartItems">
-              <!-- Cart items will be appended here -->
-            </tbody>
-            <tfoot>
-              <tr class="out_button_area">
-                <td class="d-none-l"></td>
-                <td class=""></td>
-                <td></td>
-                <td colspan="3">
-                  <div class="checkout_btn_inner d-flex align-items-center">
-                    <a class="gray_btn" href="./products.html">Continue Shopping</a>
-                    <form id="order" method="post">
-                      <button class="btn btn-primary ml-2" type="submit">
-                        Proceed to checkout
-                      </button>
-                    </form>
-                  </div>
-                </td>
-              </tr>
-            </tfoot>
-          </table>
+      <div class="row">
+        <!-- <div class="col-xl-3 col-lg-4 col-md-5">
+          <div class="sidebar-categories">
+            <div class="head">Browse Categories</div>
+            <ul class="main-categories">
+              <li class="common-filter">
+                <form>
+                  <ul id="cat"></ul>
+                </form>
+              </li>
+            </ul>
+          </div>
+        </div> -->
+
+        <div class="col-xl-9 col-lg-8 col-md-7">
+          <!-- Start Filter Bar -->
+          <!-- <div class="filter-bar d-flex flex-wrap align-items-center">
+            <div>
+              <div class="input-group filter-bar-search">
+                <form action="search.php">
+                  <input type="text" name="search" placeholder="Search" />
+                </form>
+                <div class="input-group-append">
+                  <button type="button"><i class="ti-search"></i></button>
+                </div>
+              </div>
+            </div>
+          </div> -->
+          <!-- End Filter Bar -->
+
+          <!-- Start Best Seller -->
+          <!-- 00000000000000000000000000000000000 -->
+          <section class="lattest-product-area pb-40 category-list">
+            <div class="row" id="card">
+              <!-- products -->
+            </div>
+          </section>
+          <!-- 00000000000000000000000000000000000 -->
+
+          <!-- End Best Seller -->
         </div>
       </div>
     </div>
   </section>
-  <!--================End Cart Area =================-->
+  <!-- ================ category section end ================= -->
 
   <!-- ================ Subscribe section start ================= -->
   <section class="subscribe-position">
@@ -284,15 +281,15 @@
   <!-- new -->
   <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
   <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
+
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
   <script>
 
     cartIcon();
     async function updateTable() {
-      $("#cartItems").empty(); // Ensure this matches the actual element ID in your HTML
-
-      var url = "http://127.0.0.1:3000/api/cart";
+      $("#card").empty();
+      let url = "http://127.0.0.1:3000/api/product/watchlist";
 
       try {
         const response = await axios.get(url, {
@@ -300,135 +297,148 @@
             "x-auth-token": token,
           },
         });
-        var totalCost = 0;
         const data = response.data;
-
         if (!Array.isArray(data) || data.length === 0) {
           // Display message if there are no favorite products
-          document.querySelector('.table').style.display = 'none';
-
           const msg = `
-        <h4>You have no products in cart yet!</h4>
-        <h4 class="text-primary">..To add products to your cart , press the  <i class="ti-shopping-cart"></i> icon on the product card.</h4>
-      `;
-          const cartInner = document.querySelector('.cart_inner');
-          cartInner.innerHTML = msg; // Replace content with the message
+              <h4>You Have No Products In Your WatchList Yet !!, </h4>
+              <h4 class="text-primary">...To Add Product To Your WatchList Press On <i class="fa-regular fa-bookmark"></i> Icon On Product Card</h4>
+            `;
+          $("#card").append(msg);
         } else {
-
-          for (const item of data) {
-            totalCost = totalCost + (item.Product.price * item.quantity);
-            totalCost.toFixed(2);
-
-            const cardHtml = `
-          <tr>
-            <td>
-              <img src="images/${item.Product.img_urls[0]}" width="150" alt="">
-            </td>
-            <td>
-              <p>${item.Product.name}</p>
-            </td>
-            <td>
-              <h5>$${item.Product.price.toFixed(2)}</h5>
-            </td>
-            <td>
-              <button class="quantity-btn btn-primary rounded-circle" data-action="decrease" data-productid="${item.ProductId}">-</button>
-              <span class="quantity">${item.quantity}</span>
-              <button class="quantity-btn btn-primary rounded-circle" data-action="increase" data-productid="${item.ProductId}">+</button>
-            </td>
-            <td>
-              <h5>$${(item.Product.price * item.quantity).toFixed(2)}</h5>
-            </td>
-            <td>
-              <form class="deleteitem" data-productid="${item.ProductId}">
-                <button type="submit" class="btn btn-danger">Remove</button>
-              </form>
-            </td>
-          </tr>
-        `;
-            $("#cartItems").append(cardHtml);
-          }
-
-          const total = `
-        <tr>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td><p>Total Cost = </p></td>
-          <td><p>$${totalCost.toFixed(2)}</p></td>
-        </tr>
-      `;
-          $("#cartItems").append(total);
-
-          // Add event listeners for quantity buttons
-          document.querySelectorAll('.quantity-btn').forEach(button => {
-            button.addEventListener('click', async (event) => {
-              const action = event.target.getAttribute('data-action');
-              const productId = event.target.getAttribute('data-productid');
-              await updateQuantity(productId, action);
-              updateTable(); // Refresh the table after updating
-            });
+          const favResponse = await axios.get("http://127.0.0.1:3000/api/product/fav", {
+            headers: {
+              "x-auth-token": token,
+            },
           });
+          const cartResponse = await axios.get("http://127.0.0.1:3000/api/cart", {
+            headers: {
+              "x-auth-token": token,
+            },
+          });
+          const favorites = favResponse.data;
+          const cart = cartResponse.data;
+          update(data, favorites, cart);
         }
-        ///
-
       } catch (error) {
-        document.querySelector('.table').style.display = 'none';
-
-        const msg = `
-        <h4 class="text-primary">You have to Login or Register First</h4>
-      `;
-        const cartInner = document.querySelector('.cart_inner');
-        cartInner.innerHTML = msg; // Replace content with the message
-        console.error("Error fetching cart items:", error);
+        console.error("Error fetching products:", error);
       }
     }
 
-    // Call the function to update the table
     updateTable();
 
+    async function update(products, favorites, cart) {
+      $("#card").empty();
 
-    async function updateQuantity(productId, action) {
-      try {
-        // Get the current quantity from the DOM
-        const quantitySpan = document.querySelector(`button[data-productid="${productId}"]`).nextElementSibling;
+      const favoriteIds = new Set(favorites.map(fav => fav.ProductId));
+      const cartIds = new Set(cart.map(item => item.ProductId));
 
-        let currentQuantity = parseInt(quantitySpan.textContent, 10);
+      for (const item of products) {
+        const isFavorite = favoriteIds.has(item.ProductId);
+        const isInCart = cartIds.has(item.ProductId);
 
-        // Update quantity based on the action
-        if (action === 'increase') {
-          currentQuantity++;
-        } else if (action === 'decrease') {
-          if (currentQuantity > 1) {
-            currentQuantity--;
-          }
-        }
+        const heartIconClass = isFavorite ? 'ti-heart-broken' : 'ti-heart';
+        const cartIconClass = isInCart ? 'ti-shopping-cart-full' : 'ti-shopping-cart';
 
-        // Update the quantity in the server
-        await axios.patch(`http://127.0.0.1:3000/api/cart/${productId}`, {
-          quantity: currentQuantity
-        }, {
-          headers: {
-            "x-auth-token": token
-          }
-        });
+        const favFormClass = isFavorite ? 'removefromfav' : 'addtofav';
+        const cartFormClass = isInCart ? 'removefromcart' : 'addtocart';
 
-        // Update the quantity in the DOM
-        quantitySpan.textContent = currentQuantity;
+        const product = item.Product;
+        const cardHtml = `
+<div class="col-md-6 col-lg-4">
+  <a href="single-product.html?prod=${product.id}">
+    <div class="card text-center card-product">
+      <div class="card-product__img">
+        <img class="card-img" width="500" src="images/${product.img_urls[0]}" style="width: 200px;height: 250px;object-fit: cover;" alt="">
+        <ul class="card-product__imgOverlay">
+          <li>
+            <form class="${cartFormClass}" method="post">
+              <input type="hidden" name="quantity" value="1">
+              <input type="hidden" name="productId" value="${product.id}">
+              <button type="submit"><i class="${cartIconClass}"></i></button>
+            </form>
+          </li>
+          <li>
+            <form class="removeFromWatchList" method="post">
+              <input type="hidden" name="productId" value="${product.id}">
+              <button type="submit"><i class="fa-solid fa-bookmark"></i></button>
+            </form>
+          </li>
+          <li>
+            <form class="${favFormClass}" method="post">
+              <input type="hidden" name="productId" value="${product.id}">
+              <button type="submit"><i class="${heartIconClass}"></i></button>
+            </form>
+          </li>
+        </ul>
+      </div>
+      <div class="card-body">
+        <p>ID: ${product.id}</p>
+        <h4 class="card-product__title">
+          <a href="single-product.html?prod=${product.id}">
+            Name: ${product.name}
+          </a>
+        </h4>
+        <p>Quantity: ${product.quantity}</p>
+        <p>Desc: ${product.description}</p>
+      </div>
+    </div>
+  </a>
+</div>`;
 
-        // Update the total cost
-        const price = parseFloat(document.querySelector(`tr td h5`).textContent.slice(1)); // Adjust as needed
-        document.querySelectorAll('tr td h5')[4].textContent = `$${(price * currentQuantity).toFixed(2)}`; // Adjust index for total price
-
-      } catch (error) {
-        console.error("Error updating quantity:", error);
+        $("#card").append(cardHtml);
       }
     }
 
 
-    $(document).on("submit", ".emptycart", async function (event) {
+
+
+
+    // Use event delegation to handle form submission
+    $(document).on("submit", ".addtocart", async function (event) {
       event.preventDefault();
 
       const url = "http://127.0.0.1:3000/api/cart";
+      const formData = $(this).serializeArray();
+      const data = {};
+
+      formData.forEach((item) => {
+        data[item.name] = item.value;
+      });
+
+      // Debugging: Log the serialized data
+      console.log('Serialized Data:', data);
+
+      try {
+        const response = await axios.post(url, data, {
+          headers: {
+            "x-auth-token": token,
+            "Content-Type": "application/json",  // Ensure we send JSON data
+          }
+        });
+
+        if (response.status === 200) {
+          showMessage("Product added to cart successfully!", "success");
+        } else {
+          showMessage("Failed to add product to cart. Please try again.", "error");
+        }
+
+        updateTable(); // Ensure this function exists and updates your UI as needed
+        cartIcon();
+      } catch (error) {
+        console.error("Error adding to cart:", error);
+        showMessage("Error adding product to cart. Please try again later.", "error");
+      }
+    });
+
+    //
+
+    $(document).on("submit", ".removefromcart", async function (event) {
+      event.preventDefault();
+
+      const form = $(this);
+      const productId = form.find('input[name="productId"]').val();
+      const url = `http://127.0.0.1:3000/api/cart/${productId}`;
 
       try {
         const response = await axios.delete(url, {
@@ -438,21 +448,57 @@
         });
 
         if (response.status === 200) {
-          console.log("Cart emptied successfully");
-          updateTable(); // Refresh the table to show the updated cart items
+          console.log("Item removed successfully");
         } else {
-          console.log("Failed to empty the cart");
+          console.log("Failed to remove the item");
         }
+        updateTable(); // Refresh the table to show the updated cart items
+        cartIcon();
       } catch (error) {
-        console.error("Error emptying the cart:", error);
+        console.error("Error removing the item:", error);
       }
     });
 
-    $(document).on("submit", ".deleteitem", async function (event) {
+    // 
+    $(document).on("submit", ".addtofav", async function (event) {
       event.preventDefault();
 
-      const productId = $(this).data("productid");
-      const url = `http://127.0.0.1:3000/api/cart/${productId}`;
+      const url = "http://127.0.0.1:3000/api/product/fav";
+      const formData = $(this).serializeArray();
+      const data = {};
+
+      formData.forEach((item) => {
+        data[item.name] = item.value;
+      });
+
+      // Debugging: Log the serialized data
+      console.log('Serialized Data:', data);
+
+      try {
+        const response = await axios.post(url, data, {
+          headers: {
+            "x-auth-token": token,
+            "Content-Type": "application/json",  // Ensure we send JSON data
+          }
+        });
+        console.log(response.data);
+        updateTable(); // Ensure this function exists and updates your UI as needed
+        showMessage("Product added to Favourites successfully!", "success");
+      } catch (error) {
+        console.error("Error adding to fav:", error);
+        showMessage("Error adding product to Favourites. Please try again later.", "error");
+
+
+      }
+    });
+    //
+    //
+    $(document).on("submit", ".removefromfav", async function (event) {
+      event.preventDefault();
+
+      const form = $(this);
+      const productId = form.find('input[name="productId"]').val();
+      const url = `http://127.0.0.1:3000/api/product/fav/${productId}`;
 
       try {
         const response = await axios.delete(url, {
@@ -471,25 +517,34 @@
         console.error("Error removing the item:", error);
       }
     });
-    ////////////
-    $("#order").submit(async function (event) {
+
+    // 
+
+    //
+    $(document).on("submit", ".removeFromWatchList", async function (event) {
       event.preventDefault();
-      const url = "http://127.0.0.1:3000/api/order";
+
+      const form = $(this);
+      const productId = form.find('input[name="productId"]').val();
+      const url = `http://127.0.0.1:3000/api/product/watchlist/${productId}`;
 
       try {
-        const response = await axios.post(url, {}, {
+        const response = await axios.delete(url, {
           headers: {
-            "x-auth-token": token
-          }
+            "x-auth-token": token,
+          },
         });
-        console.log(response.data);
-        updateTable(); // Ensure this function exists and updates your UI as needed
-        window.location.href = "checkout.html";
+
+        if (response.status === 200) {
+          console.log("Item removed successfully");
+          updateTable(); // Refresh the table to show the updated cart items
+        } else {
+          console.log("Failed to remove the item");
+        }
       } catch (error) {
-        console.error("Error adding to cart:", error);
+        console.error("Error removing the item:", error);
       }
     });
-
   </script>
 </body>
 

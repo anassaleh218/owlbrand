@@ -57,17 +57,14 @@
               </li>
             </ul>
             <ul class="nav-shop">
-              <!-- <li class="nav-item">
+              <li class="nav-item">
                 <button><i class="ti-search"></i></button>
-              </li> -->
-              <li>
-                <p id="userName"></p>
               </li>
               <!-- ______________ -->
               <li class="nav-item">
                 <button>
                   <a href="cart.html">
-                    <i class="ti-shopping-cart" id="cartIcon" style="display: none"></i>
+                    <i class="ti-shopping-cart"></i>
                   </a>
                 </button>
               </li>
@@ -90,12 +87,12 @@
     <div class="container h-100">
       <div class="blog-banner">
         <div class="text-center">
-          <h1>Order Confirmation</h1>
+          <h1>Product Checkout</h1>
           <nav aria-label="breadcrumb" class="banner-breadcrumb">
             <ol class="breadcrumb">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
               <li class="breadcrumb-item active" aria-current="page">
-                Shop Category
+                Checkout
               </li>
             </ol>
           </nav>
@@ -105,31 +102,57 @@
   </section>
   <!-- ================ end banner area ================= -->
 
-  <!--================Order Details Area =================-->
-  <section class="order_details section-margin--small">
+  <!--================Checkout Area =================-->
+  <section class="checkout_area section-margin--small">
     <div class="container">
-      <p class="text-center billing-alert">
-        Thank you. Your order has been received.
-      </p>
-      <div class="row mb-5" id="data"></div>
-      <div class="order_details_table">
-        <h2>Order Details</h2>
-        <div class="table-responsive">
-          <table class="table">
-            <thead>
-              <tr>
-                <th scope="col">Product</th>
-                <th scope="col">Quantity</th>
-                <th scope="col">Total</th>
-              </tr>
-            </thead>
-            <tbody id="details"></tbody>
-          </table>
+      <div class="billing_details">
+        <div class="row">
+          <div class="col-lg-8">
+            <h3>Payment Details</h3>
+            <form method="post" id="checkForm" class="row contact_form">
+
+              <div class="col-md-12 form-group p_star">
+                <label class="form-label">Credit Card Holder Name</label>
+                <input type="text" class="form-control" name="ccName" />
+              </div>
+
+              <div class="col-md-4 form-group p_star">
+                <label class="form-label">Payment Method</label>
+                <select class="country_select" name="ccType">
+                  <option value="Visa"><i class="fa-brands fa-cc-visa"></i>VISA</option>
+                  <option value="MasterCard">Master Card</option>
+                  <option value="Meeza">Meeza - Only In Egypt</option>
+                </select>
+              </div>
+              <div class="col-md-8 form-group p_star">
+                <label class="form-label"><i class="ti-credit-card"></i> Credit Card Number</label>
+                <input type="text" class="form-control" name="ccNum" />
+              </div>
+
+              <div class="col-md-6 form-group p_star">
+                <label class="form-label d-block">Exp. Date</label>
+                <input type="number" maxlength="2" class="form-control col-md-4 d-inline" name="expMonth" />
+                <h3 class="d-inline">/</h3>
+                <input type="number" maxlength="2" class="form-control col-md-4 d-inline" name="expYear" />
+              </div>
+              <div class="col-md-4 form-group p_star">
+                <label class="form-label">CVV</label>
+                <input type="number" maxlength="3" class="form-control" name="cvv" />
+              </div>
+
+
+              <button type="submit" class="btn btn-primary">send</button>
+            </form>
+
+          </div>
+          <div class="col-lg-4" id="orderDetails">
+            <!-- js -->
+          </div>
         </div>
       </div>
     </div>
   </section>
-  <!--================End Order Details Area =================-->
+  <!--================End Checkout Area =================-->
 
   <!--================ End =================-->
 
@@ -232,156 +255,83 @@
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
   <script>
+    async function orderDetails() {
+      const url = "http://127.0.0.1:3000/api/order";
 
-    cartIcon();
-    
-    async function updateTable() {
-      $("#card").empty(); // Clear any existing content
-
-      const urlParams = new URLSearchParams(window.location.search);
-      const OrderId = urlParams.get("order");
-
-      if (!OrderId) {
-        console.error("Order ID not found in URL parameters.");
-        return;
-      }
-
-      const url = `http://127.0.0.1:3000/api/order/${OrderId}`;
       try {
         const response = await axios.get(url, {
           headers: {
-            "x-auth-token": token, // Replace 'token' with your actual JWT token
+            "x-auth-token": token,
           },
         });
-
         const data = response.data;
 
-        // Generate HTML for order products
-        let productsHtml = '';
-        for (const orderProduct of data.order.orderProducts) {
-          const product = orderProduct.Product;
+        // let totalCost = 0;
+        let totalCost = 60; //shipping
+        let productsHtml = "";
+
+        for (const item of data) {
+          totalCost += item.Product.price * item.quantity;
           productsHtml += `
-                <tr>
-                    <td>
-                        <p>${product.name}</p>
-                    </td>
-                    <td>
-                        <h5>x ${orderProduct.quantity}</h5>
-                    </td>
-                    <td>
-                        <p>$ ${product.price * orderProduct.quantity}</p>
-                    </td>
-                </tr>`;
+                <li>
+                    <a href="#">
+                        ${item.Product.name} <span class="middle">x ${item.quantity
+            }</span>
+                        <span class="last">$${(
+              item.Product.price * item.quantity
+            ).toFixed(2)}</span>
+                    </a>
+                </li>`;
         }
 
-        productsHtml += ` 
-        <tr>
-          <td>
-            <p></p>
-          </td>
-          <td>
-            <h5></h5>
-          </td>
-          <td>
-              <p>Shipping fees: 60$</p>
-          </td>
-        </tr>
-        <tr>
-          <td>
-              <p></p>
-          </td>
-          <td>
-              <h5></h5>
-          </td>
-          <td>
-              <p>$ ${data.totalCost}</p>
-          </td>
-        </tr>`;
-
-        // Calculate total cost
-        let total = 0;
-        for (const orderProduct of data.order.orderProducts) {
-          const product = orderProduct.Product;
-          total += product.price * orderProduct.quantity;
-        }
-
-        // Generate HTML for order info
-        const cardHtml = `
-            <div class="col-md-6 col-xl-4 mb-4 mb-xl-0">
-                <div class="confirmation-card p-3">
-                    <h3 class="billing-title">Order Info</h3>
-                    <table class="order-rable">
-                        <tr>
-                            <td>Order number</td>
-                            <td>: ${data.order.id}</td>
-                        </tr>
-                        <tr>
-                            <td>Order Status</td>
-                            <td>: ${data.order.order_status}</td>
-                        </tr>
-                        <tr>
-                            <td>Total</td>
-                            <td>: ${total}</td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-            <div class="col-md-6 col-xl-4 mb-4 mb-xl-0">
-                <div class="confirmation-card p-3">
-                    <h3 class="billing-title">Billing Address</h3>
-                    <table class="order-rable">
-                        <tr>
-                            <td>Flat No</td>
-                            <td>: ${data.flatNo}</td>
-                        </tr>
-                        <tr>
-                            <td>Building No</td>
-                            <td>: ${data.buildingNo}</td>
-                        </tr>
-                        <tr>
-                            <td>Street</td>
-                            <td>: ${data.street}</td>
-                        </tr>
-                        <tr>
-                            <td>City</td>
-                            <td>: ${data.city}</td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-            <div class="col-md-6 col-xl-4 mb-4 mb-xl-0">
-                <div class="confirmation-card p-3">
-                    <h3 class="billing-title">Payment Details</h3>
-                    <table class="order-rable">
-                        <tr>
-                            <td>Payment Method :</td>
-                            <td>: ${data.paymentMethod}</td>
-                        </tr>
-                    </table>
-                </div>
-                <div class="confirmation-card p-3">
-                    <h3 class="billing-title">Contact Details</h3>
-                    <table class="order-rable">
-                        <tr>
-                            <td>Phone Number</td>
-                            <td>: ${data.phone1}</td>
-                        </tr>
-                        
-                    </table>
-                </div>
+        const orderHtml = `
+            <div class="order_box">
+                <h2>Your Order</h2>
+                <ul class="list">
+                    <li><a href="#"><h4>Product <span>Total</span></h4></a></li>
+                    ${productsHtml}
+                </ul>
+                <ul class="list list_2">
+                    <li><a href="#">Subtotal <span>$${(totalCost - 60).toFixed(
+          2
+        )}</span></a></li>
+                    <li><a href="#">Shipping <span>Flat rate: $60.00</span></a></li>
+                    <li><a href="#">Total <span>$${totalCost.toFixed(
+          2
+        )}</span></a></li>
+                </ul>
             </div>`;
 
-        // Append the generated HTML to the DOM
-        $("#data").append(cardHtml);
-        $("#details").append(productsHtml);
-
+        $("#orderDetails").html(orderHtml); // Use html() instead of append() to replace existing content
       } catch (error) {
         console.error("Error fetching order details:", error);
       }
     }
 
-    updateTable();
+    // Call the function to load the order details
+    orderDetails();
 
+    $(document).ready(function () {
+      // Get the order ID from the URL parameters
+      const urlParams = new URLSearchParams(window.location.search);
+      const orderValue = urlParams.get("order");
+
+      $("#checkForm").submit(async function (event) {
+        event.preventDefault(); // Prevent the default form submission
+
+        try {
+          // Simulate an asynchronous operation here
+          // e.g., submitting the form data via AJAX
+          // await someAsyncFunction();
+
+          // After the async operation is complete, redirect to the confirmation page
+          window.location.href = `confirmation.html?order=${orderValue}`;
+        } catch (error) {
+          console.error("Error:", error);
+          // Handle any errors here (e.g., display an error message to the user)
+        }
+      });
+    });
   </script>
 </body>
 

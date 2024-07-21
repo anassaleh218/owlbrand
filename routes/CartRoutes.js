@@ -54,6 +54,46 @@ router.post("/", async (req, res) => {
     }
 });
 
+// ////
+
+router.patch("/:prodId", async (req, res) => {
+    const token = req.header("x-auth-token");
+    if (!token) return res.status(401).send("Access Denied");
+
+    try {
+        const decodedPayload = jwt.verify(token, process.env.JWT_SECRET);
+        const userId = decodedPayload.userid;
+
+        const cart = await Cart.findOne({
+            where: {
+                UserId: userId
+            }
+        });
+
+        if (!cart) {
+            return res.status(404).send("Cart not found");
+        }
+
+        // Find the cart product entry
+        const cartProduct = await CartProducts.update({ quantity: req.body.quantity },
+            {
+                where: {
+                    CartId: cart.id,
+                    ProductId: req.params.prodId
+                }
+            });
+
+        return res.status(200).send("Product quantity updated successfully");
+
+    } catch (err) {
+        console.error('Error:', err.message);
+        res.status(400).send("Error updating product quantity");
+    }
+});
+
+
+// ////
+
 
 router.get("/", async (req, res) => {
 
@@ -172,4 +212,5 @@ router.delete("/", async (req, res) => {
         res.status(400).send("cart NOT emptied");
     }
 })
+
 module.exports = router;
