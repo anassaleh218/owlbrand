@@ -19,19 +19,20 @@
 </head>
 
 <body>
+  <div id="message-container"></div>
   <!--================ Start Header Menu Area =================-->
   <header class="header_area">
     <div class="main_menu">
       <nav class="navbar navbar-expand-lg navbar-light">
         <div class="container" style="min-width: 1220px">
           <a class="navbar-brand logo_h" href="index.html">
-            <!-- <img src="asstes/img/logo.png" alt=""> -->
-            <h3 class="title">E-Shopping</h3>
+            <!-- <img src="asstes/img/logo.jpg" alt="" style="width: 100px"> -->
+            <h3 class="title">Owl Brand</h3>
           </a>
 
           <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
             <ul class="nav navbar-nav menu_nav ml-auto mr-auto">
-              <li class="nav-item active">
+              <li class="nav-item">
                 <a class="nav-link" href="index.html">Home</a>
               </li>
 
@@ -57,14 +58,11 @@
               </li>
             </ul>
             <ul class="nav-shop">
-              <!-- <li class="nav-item">
-                  <button><i class="ti-search"></i></button>
-                </li> -->
-              <li>
+
+              <li class="nav-item">
                 <p id="userName"></p>
               </li>
 
-              <!-- ______________ -->
               <li class="nav-item">
                 <button>
                   <a href="cart.html">
@@ -72,11 +70,11 @@
                   </a>
                 </button>
               </li>
-              <!-- ______________ -->
 
               <li id="loginNavItem" class="nav-item">
                 <a id="loginButton" class="button button-header" href="login.html">Login</a>
               </li>
+
               <li id="registerNavItem" class="nav-item">
                 <a id="registerButton" class="button button-header" href="register.html">Register</a>
               </li>
@@ -95,10 +93,8 @@
           <h1>My Orders</h1>
           <nav aria-label="breadcrumb" class="banner-breadcrumb">
             <ol class="breadcrumb">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active" aria-current="page">
-                Shop Category
-              </li>
+              <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+              <li class="breadcrumb-item"><a href="products.html">Shop Category</a></li>
             </ol>
           </nav>
         </div>
@@ -315,6 +311,10 @@
                         <tr>
                             <td>Order Cost</td>
                             <td>: $${item.totalCost}</td>
+                        </tr>
+                        <tr>
+                            <td>Payment Method</td>
+                            <td>: ${item.paymentMethod}</td>
                         </tr>
                     </table>
                 </div>

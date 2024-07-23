@@ -89,13 +89,11 @@
     <div class="container h-100">
       <div class="blog-banner">
         <div class="text-center">
-          <h1>Shop Category</h1>
+          <h1>Favourites <i class="ti-heart"></i> Products</h1>
           <nav aria-label="breadcrumb" class="banner-breadcrumb">
             <ol class="breadcrumb">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active" aria-current="page">
-                Shop Category
-              </li>
+              <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+              <li class="breadcrumb-item"><a href="products.html">Shop Category</a></li>
             </ol>
           </nav>
         </div>
@@ -108,38 +106,14 @@
   <section class="section-margin--small mb-5">
     <div class="container">
       <div class="row">
-        <!-- <div class="col-xl-3 col-lg-4 col-md-5">
-          <div class="sidebar-categories">
-            <div class="head">Browse Categories</div>
-            <ul class="main-categories">
-              <li class="common-filter">
-                <form>
-                  <ul id="cat"></ul>
-                </form>
-              </li>
-            </ul>
-          </div>
-        </div> -->
+
 
         <div class="col-xl-9 col-lg-8 col-md-7">
-          <!-- Start Filter Bar -->
-          <!-- <div class="filter-bar d-flex flex-wrap align-items-center">
-            <div>
-              <div class="input-group filter-bar-search">
-                <form action="search.php">
-                  <input type="text" name="search" placeholder="Search" />
-                </form>
-                <div class="input-group-append">
-                  <button type="button"><i class="ti-search"></i></button>
-                </div>
-              </div>
-            </div>
-          </div> -->
-          <!-- End Filter Bar -->
+
 
           <!-- Start Best Seller -->
           <!-- 00000000000000000000000000000000000 -->
-          <section class="lattest-product-area pb-40 category-list">
+          <section class="lattest-product-area pb-40 category-list" id="msg">
             <div class="row" id="card">
               <!-- products -->
             </div>
@@ -152,39 +126,6 @@
     </div>
   </section>
   <!-- ================ category section end ================= -->
-
-  <!-- ================ Subscribe section start ================= -->
-  <section class="subscribe-position">
-    <div class="container">
-      <div class="subscribe text-center">
-        <h3 class="subscribe__title">Get Update From Anywhere</h3>
-        <p>
-          Bearing Void gathering light light his eavening unto dont afraid
-        </p>
-        <div id="mc_embed_signup">
-          <form target="_blank"
-            action="https://spondonit.us12.list-manage.com/subscribe/post?u=1462626880ade1ac87bd9c93a&amp;id=92a4423d01"
-            method="get" class="subscribe-form form-inline mt-5 pt-1">
-            <div class="form-group ml-sm-auto">
-              <input class="form-control mb-1" type="email" name="EMAIL" placeholder="Enter your email"
-                onfocus="this.placeholder = ''" onblur="this.placeholder = 'Your Email Address '" />
-              <div class="info"></div>
-            </div>
-            <button class="button button-subscribe mr-auto mb-1" type="submit">
-              Subscribe Now
-            </button>
-            <div style="position: absolute; left: -5000px">
-              <input name="b_36c4fd991d266f23781ded980_aefe40901a" tabindex="-1" value="" type="text" />
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </section>
-  <!-- ================ Subscribe section end ================= -->
-
-  <!--================ End =================-->
-
   <!-- footer -->
   <!--================ Start footer Area  =================-->
   <footer class="footer">
@@ -210,9 +151,9 @@
               <h4 class="footer_title">Quick Links</h4>
               <ul class="list">
                 <li><a href="index.html">Home</a></li>
-                <li><a href="products.php">Shop</a></li>
-                <li><a href="fav-products.php">Favourites</a></li>
-                <li><a href="watchlist.php">Watch List</a></li>
+                <li><a href="products.html">Shop</a></li>
+                <li><a href="fav.html">Favourites</a></li>
+                <li><a href="watchlist.html">Watch List</a></li>
               </ul>
             </div>
           </div>
@@ -260,7 +201,7 @@
               document.write(new Date().getFullYear());
             </script>
             All rights reserved | This project is made with
-            <i class="fa fa-heart" aria-hidden="true"></i>
+            <i class="fa fa-heart" aria-hidden="true"></i> By Anas Saleh
             <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
           </p>
         </div>
@@ -301,9 +242,9 @@
           // Display message if there are no favorite products
           const msg = `
         <h4>You have no favorite products yet!</h4>
-        <h4 class="text-primary">..To add products to your favorites list, press the <i class="fa-regular fa-heart"></i> icon on the product card.</h4>
+        <h4 class="text-primary">To add products to your favorites list, press the <i class="fa-regular fa-heart"></i> icon on the product card.</h4>
       `;
-          $("#card").append(msg);
+          $("#msg").append(msg);
         } else {
           const watchlistResponse = await axios.get("http://127.0.0.1:3000/api/product/watchlist", {
             headers: {
@@ -393,7 +334,7 @@
     }
 
 
-// Use event delegation to handle form submission
+    // Use event delegation to handle form submission
     $(document).on("submit", ".addtocart", async function (event) {
       event.preventDefault();
 
@@ -429,7 +370,7 @@
         showMessage("Error adding product to cart. Please try again later.", "error");
       }
     });
-//
+    //
     $(document).on("submit", ".removefromcart", async function (event) {
       event.preventDefault();
 
@@ -446,7 +387,7 @@
 
         if (response.status === 200) {
           console.log("Item removed successfully");
-          
+
         } else {
           console.log("Failed to remove the item");
         }
@@ -458,7 +399,7 @@
     });
 
 
-//////////////////
+    //////////////////
     $(document).on("submit", ".removefromfav", async function (event) {
       event.preventDefault();
 
@@ -483,7 +424,7 @@
         console.error("Error removing the item:", error);
       }
     });
-//////////////////
+    //////////////////
     $(document).on("submit", ".addtowl", async function (event) {
       event.preventDefault();
 
@@ -514,7 +455,7 @@
 
       }
     });
-//
+    //
     $(document).on("submit", ".removeFromWatchList", async function (event) {
       event.preventDefault();
 

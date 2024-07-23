@@ -17,6 +17,9 @@
   <link rel="stylesheet" href="asstes/css/style.css" />
   <link rel="stylesheet" href="asstes/css/edits.css" />
 </head>
+<style>
+
+</style>
 
 <body>
   <div id="message-container"></div>
@@ -32,7 +35,7 @@
 
           <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
             <ul class="nav navbar-nav menu_nav ml-auto mr-auto">
-              <li class="nav-item active">
+              <li class="nav-item">
                 <a class="nav-link" href="index.html">Home</a>
               </li>
 
@@ -114,17 +117,18 @@
 
 
     <!-- ================ trending product section start ================= -->
-    <section class="section-margin calc-60px">
+    <section class="section-margin mt-0">
       <div class="container">
-        <div class="section-intro pb-60px">
-          <p>Popular Item in the market</p>
-          <h2>Trending <span class="section-intro__style">Product</span></h2>
+        <div class="section-intro mt-4 pb-60px text-center">
+          <p>Find Popular Categories</p>
+          <h2>All <span class="section-intro__style">Categories</span></h2>
         </div>
-        <div class="row" id="card">
-          <!-- function update table -->
+        <div class="owl-carousel owl-theme category-carousel" id="categoryCarousel">
         </div>
       </div>
     </section>
+
+
     <!-- ================ trending product section end ================= -->
 
     <!-- ================ offer section start ================= -->
@@ -144,7 +148,32 @@
       </div>
     </section>
     <!-- ================ offer section end ================= -->
+    <section class="section-margin calc-60px">
+      <div class="container">
+        <div class="section-intro pb-60px">
+          <p>Popular 10 Items in the market</p>
+          <h2>Trending <span class="section-intro__style">Product</span></h2>
+        </div>
+        <div class="row" id="trending">
+          <!-- function update table -->
+        </div>
+      </div>
+    </section>
+    <!-- ll -->
 
+
+    <section class="section-margin calc-60px">
+      <div class="container">
+        <div class="section-intro pb-60px">
+          <p>Popular 10 Items in the market</p>
+          <h2>Best <span class="section-intro__style">Sellers</span></h2>
+        </div>
+        <div class="owl-carousel owl-theme" id="bestSellerCarousel">
+          <!-- Items will be dynamically added here -->
+        </div>
+      </div>
+      </div>
+    </section>
 
   </main>
 
@@ -173,9 +202,9 @@
               <h4 class="footer_title">Quick Links</h4>
               <ul class="list">
                 <li><a href="index.html">Home</a></li>
-                <li><a href="products.php">Shop</a></li>
-                <li><a href="fav-products.php">Favourites</a></li>
-                <li><a href="watchlist.php">Watch List</a></li>
+                <li><a href="products.html">Shop</a></li>
+                <li><a href="fav.html">Favourites</a></li>
+                <li><a href="watchlist.html">Watch List</a></li>
               </ul>
             </div>
           </div>
@@ -223,7 +252,7 @@
               document.write(new Date().getFullYear());
             </script>
             All rights reserved | This project is made with
-            <i class="fa fa-heart" aria-hidden="true"></i>
+            <i class="fa fa-heart" aria-hidden="true"></i> By Anas Saleh
             <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
           </p>
         </div>
@@ -231,6 +260,7 @@
     </div>
   </footer>
   <!--================ End footer Area  =================-->
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> -->
   <script src="asstes/vendors/jquery/jquery-3.2.1.min.js"></script>
   <script src="asstes/vendors/bootstrap/bootstrap.bundle.min.js"></script>
   <script src="asstes/vendors/skrollr.min.js"></script>
@@ -242,16 +272,26 @@
   <script src="asstes/js/project.js"></script>
   <script src="asstes/js/product.js"></script>
 
-  <!-- new -->
-  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
-  <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
-
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
   <script>
-    cartIcon();
+    if (token && isAdmin == "false") {
+  // Call the cartIcon function
+  cartIcon();
+} else {
+  // Do nothing
+  console.log("Token is not defined, skipping cartIcon function call.");
+}
+
+    // Fetch categories when the DOM is fully loaded
+    document.addEventListener('DOMContentLoaded', fetchIndexCategories);
+
     updateTable();
+
+
   </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="asstes/vendors/owl-carousel/owl.carousel.min.js"></script>
 </body>
 
 </html>

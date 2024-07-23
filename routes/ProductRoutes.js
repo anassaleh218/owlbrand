@@ -1,5 +1,7 @@
-const { Product, Size, Color, Type } = require("../models/ProductModelDB");
+const { Product } = require("../models/ProductModelDB");
 const {FavProducts,WatchList} = require("../models/FavWatchModelDB")
+const {Feedback} = require("../models/FeedbackModelDB")
+const {User} = require("../models/UserModelDB")
 
 const upload = require("../middleware/upload");
 const sequelize = require("../config/db");
@@ -74,19 +76,6 @@ router.get("/category/:category", async (req, res) => {
   }
 });
 
-
-
-
-// getAllProducts
-// router.get("/", async (req, res) => {
-//   try {
-//     const products = await Product.findAll();
-//     res.status(200).send(products);
-//   } catch (err) {
-//     console.error(err); // Log the complete error for debugging
-//     res.status(400).send("Error retrieving products");
-//   }
-// });
 
 router.get("/", async (req, res) => {
   try {
@@ -168,15 +157,6 @@ router.post("/", upload.array("prodimg", 10), auth, async (req, res) => {
     res.status(400).send("Product addition failed. Please check the request data.");
   }
 });
-// createProduct with MW
-// router.post("/", auth, ProductsController.addProduct);
-
-
-// // updateProductByID
-// router.put("/:id", auth, ProductsController.updateProductByID);
-
-// // deleteProductByID
-// router.delete("/:id", auth, ProductsController.deleteProductByID);
 
 
 // fav
@@ -353,9 +333,7 @@ router.delete("/watchlist/:prodId", async (req, res) => {
 
 
 
-
-
-
+// search = sort
 router.get('/searchsort', async (req, res) => {
   const { search = '', sort_by = '', category = '' } = req.query;
 
@@ -368,9 +346,7 @@ router.get('/searchsort', async (req, res) => {
   try {
     const products = await Product.findAll({
       where: {
-        
-          category: category,
-        
+        category: category || { [Op.ne]: null }, // Ensuring it works even if category is not provided
         name: {
           [Op.like]: `%${search}%`
         }
@@ -389,16 +365,81 @@ router.get('/searchsort', async (req, res) => {
         productData.img_urls = [];
       }
 
-      // // Remove the original img_url field if desired
-      // delete productData.img_url;
+      // Remove the original img_url field if desired
+      delete productData.img_url;
 
       return productData;
     });
 
     res.status(200).send(transformedProducts);
-    // res.json(products);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 });
+
+//feedback
+router.post("/feedback", async (req, res) => {
+  const token = req.header("x-auth-token");
+  // if(!token) return res.status(401).send("Access Denied");
+  try {
+    const decodedPayload = jwt.verify(token, process.env.JWT_SECRET);
+    const userid = decodedPayload.userid;
+
+    const feedback = await Feedback.create({
+      UserId: userid,
+      ProductId: req.body.productId,
+      feedback: req.body.feedback,
+      rate:req.body.rate
+    });
+
+    return res.status(200).send("feedback on product added successfully");
+  } catch (err) {
+    console.error('Error:', err.message);
+    res.status(400).send("feedback on product NOT added");
+  }
+});
+
+router.get("/feedbacks/:productId", async (req, res) => {
+  const { productId } = req.params;
+
+  try {
+    const feedbacks = await Feedback.findAll({
+      where: {
+        ProductId: productId
+      },
+      include: {
+        model: User,
+        attributes: ['name'] // Assuming User model has a 'name' field
+      }
+    });
+
+    return res.status(200).json(feedbacks);
+  } catch (err) {
+    console.error('Error:', err.message);
+    res.status(500).send("Error fetching feedbacks");
+  }
+});
+
+// createProduct with MW
+// router.post("/", auth, ProductsController.addProduct);
+
+
+// getAllProducts
+// router.get("/", async (req, res) => {
+//   try {
+//     const products = await Product.findAll();
+//     res.status(200).send(products);
+//   } catch (err) {
+//     console.error(err); // Log the complete error for debugging
+//     res.status(400).send("Error retrieving products");
+//   }
+// });
+
+// // updateProductByID
+// router.put("/:id", auth, ProductsController.updateProductByID);
+
+// // deleteProductByID
+// router.delete("/:id", auth, ProductsController.deleteProductByID);
+
+
 module.exports = router;

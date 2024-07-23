@@ -26,7 +26,7 @@ const Product = db.define("Product", {
   },
   category: {
     type: DataTypes.ENUM,
-    values: ["T-Shirts", "Hoodies", "Bags"],
+    values: ["Electronics", "Mobiles", "Clothes", "Books", "Home","Grocery","Health"],
     allowNull: false
   },
   show:{
