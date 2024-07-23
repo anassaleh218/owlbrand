@@ -5,7 +5,7 @@
 
   .container {
     width: 100%;
-    max-width: 960px;
+    /* max-width: 960px; */
     /* Adjust as needed for your layout */
     padding: 0 15px;
     margin: 0 auto;

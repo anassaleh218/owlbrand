@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta http-equiv="X-UA-Compatible" content="ie=edge" />
   <title>Owl Brand - Home</title>
-  <link rel="icon" href="asstes/img/Fevicon.png" type="image/png" />
+  <link rel="icon" href="asstes/img/OwlLogo.png" type="image/png" />
   <link rel="stylesheet" href="asstes/vendors/bootstrap/bootstrap.min.css" />
   <link rel="stylesheet" href="asstes/vendors/fontawesome/css/all.css" />
   <link rel="stylesheet" href="asstes/vendors/themify-icons/themify-icons.css" />
@@ -27,10 +27,10 @@
   <header class="header_area">
     <div class="main_menu">
       <nav class="navbar navbar-expand-lg navbar-light">
-        <div class="container" style="min-width: 1220px">
+        <div class="container">
+          
           <a class="navbar-brand logo_h" href="index.html">
-            <!-- <img src="asstes/img/logo.jpg" alt="" style="width: 100px"> -->
-            <h3 class="title">Owl Brand</h3>
+            <img src="asstes/img/OwlLogo.png" width="200" alt="Owl Logo">
           </a>
 
           <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
@@ -276,12 +276,12 @@
 
   <script>
     if (token && isAdmin == "false") {
-  // Call the cartIcon function
-  cartIcon();
-} else {
-  // Do nothing
-  console.log("Token is not defined, skipping cartIcon function call.");
-}
+      // Call the cartIcon function
+      cartIcon();
+    } else {
+      // Do nothing
+      console.log("Token is not defined, skipping cartIcon function call.");
+    }
 
     // Fetch categories when the DOM is fully loaded
     document.addEventListener('DOMContentLoaded', fetchIndexCategories);

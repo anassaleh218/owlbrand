@@ -5,11 +5,33 @@ const router = express();
 const db = require ("./config/db");
 require("dotenv").config();
 
+const swaggerJsDoc = require('swagger-jsdoc');
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger.json');
 // router.use(cors()); 
 
 router.use(bodyParser.urlencoded({ extended: true }));
 router.use(bodyParser.json());
 
+// Serve Swagger UI at /api-docs
+const swaggerOptions = {
+  swaggerDefinition: {
+    openapi: '3.0.0',
+    info: {
+      title: 'Owl Shop-ecommerce API',
+      description: 'Owl Shop Information',
+      version: '1.0.0',
+      contact: {
+        name: 'Developer',
+      },
+      servers: ['http://localhost:3000'],
+    },
+  },
+  apis: ['./routes/*.js'], // Files containing annotations
+};
+
+const swaggerDocs = swaggerJsDoc(swaggerOptions);
+router.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 
 const allowedOrigins = ['http://127.0.0.1:5500']; // Replace with your frontend origin

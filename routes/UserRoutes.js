@@ -9,6 +9,73 @@ const userValidator = require("../middleware/UserValidatorMW");
 
 // Regestration
 // user can't add value to isAdmin while registeration, make it manually for first admin then use admin route
+
+/**
+ * @swagger
+ * /api/user/:
+ *   post:
+ *     summary: Create a new user
+ *     description: Creates a new user with the provided details. If the user is not an admin, a cart is also created for the user. A JWT token is generated and returned in the response header.
+ *     tags:
+ *       - Users
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *               email:
+ *                 type: string
+ *                 format: email
+ *               password:
+ *                 type: string
+ *                 format: password
+ *             required:
+ *               - name
+ *               - email
+ *               - password
+ *     responses:
+ *       200:
+ *         description: User created successfully
+ *         headers:
+ *           x-auth-token:
+ *             description: JWT token
+ *             schema:
+ *               type: string
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 token:
+ *                   type: string
+ *                 isAdmin:
+ *                   type: boolean
+ *                 userName:
+ *                   type: string
+ *               example:
+ *                 token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+ *                 isAdmin: false
+ *                 userName: "John Doe"
+ *       400:
+ *         description: User already exists or validation error
+ *         content:
+ *           text/plain:
+ *             schema:
+ *               type: string
+ *               example: "User already exists"
+ *       500:
+ *         description: Internal Server Error
+ *         content:
+ *           text/plain:
+ *             schema:
+ *               type: string
+ *               example: "Data of user not added"
+ */
+
 router.post("/", userValidator, async (req, res) => {
   try {
     // Check if user already exists
