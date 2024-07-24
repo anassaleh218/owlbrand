@@ -19,20 +19,43 @@ function deleteCookie(cookieName) {
     cookieName + "=; Path=/Views; Expires=Thu, 01 Jan 1970 00:00:01 GMT;";
 }
 
+// function showMessage(message, type) {
+//   const messageContainer = $("#message-container");
+//   const messageHtml = `
+//     <div class="alert alert-${type}" role="alert">
+//       ${message}
+//     </div>
+//   `;
+//   messageContainer.html(messageHtml);
+
+//   // Scroll to the top of the page
+//   window.scrollTo({
+//     top: 0,
+//     behavior: 'smooth'
+//   });
+
+//   // Optional: Hide message after a few seconds
+//   setTimeout(() => {
+//     messageContainer.empty();
+//   }, 5000);
+// }
+
+// $(document).ready(function () {
+//   window.scrollTo({
+//     top: 0,
+//     behavior: 'smooth'
+//   });
+// });
+
 function showMessage(message, type) {
   const messageContainer = $("#message-container");
   const messageHtml = `
-    <div class="alert alert-${type}" role="alert">
+    <div class="alert alert-${type} alert-dismissible fade show" role="alert">
       ${message}
     </div>
   `;
+  
   messageContainer.html(messageHtml);
-
-  // Scroll to the top of the page
-  window.scrollTo({
-    top: 0,
-    behavior: 'smooth'
-  });
 
   // Optional: Hide message after a few seconds
   setTimeout(() => {
@@ -41,12 +64,15 @@ function showMessage(message, type) {
 }
 
 $(document).ready(function () {
-  window.scrollTo({
-    top: 0,
-    behavior: 'smooth'
+  // Ensure message container is styled correctly
+  $("#message-container").css({
+    'position': 'fixed',
+    'top': '105px', // Adjust based on navbar height
+    'left': '0',
+    'right': '0',
+    'z-index': '1050' // Ensure it appears above other content
   });
 });
-
 
 
 

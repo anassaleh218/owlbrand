@@ -247,8 +247,7 @@ async function updateNotLoggingBestSeller(data) {
       <a href="single-product.html?prod=${product.id}">
       <div class="card text-center card-product">
         <div class="card-product__img" style="height:250px">
-          <img class="img-fluid" src="images/${product.img_urls[0]}" style="width: 100%;
-          height: 100%;
+          <img class="img-fluid" src="images/${product.img_urls[0]}" style="
           object-fit: cover;" alt="">
 
           <ul class="card-product__imgOverlay">
@@ -449,7 +448,18 @@ async function updateLoggingTrending(data, favorites, watchlist, cart) {
 
 // 
 async function updateLoggingBestSeller(data, favorites, watchlist, cart) {
-  $("#bestSellerCarousel").empty();
+  
+  const $carousel = $("#bestSellerCarousel");
+  
+  // Destroy any existing Owl Carousel instance
+  $carousel.trigger('destroy.owl.carousel').removeClass('owl-carousel owl-loaded');
+  $carousel.find('.owl-stage-outer').children().unwrap();
+  $carousel.removeData();
+  
+  // $("#bestSellerCarousel").empty();
+  // Empty the carousel content
+  $carousel.empty();
+
   const maxProducts = 10; // Maximum number of products to display
 
   // Reverse the data array
@@ -481,8 +491,7 @@ async function updateLoggingBestSeller(data, favorites, watchlist, cart) {
       <a href="single-product.html?prod=${product.id}">
       <div class="card text-center card-product">
         <div class="card-product__img" style="height:250px">
-          <img class="img-fluid" src="images/${product.img_urls[0]}" style="width: 100%;
-          height: 100%;
+          <img class="img-fluid" src="images/${product.img_urls[0]}" style="
           object-fit: cover;" alt="">
 
           <ul class="card-product__imgOverlay">
@@ -494,7 +503,7 @@ async function updateLoggingBestSeller(data, favorites, watchlist, cart) {
               </form>
             </li>
             <li>
-              <form class="${wlFormClass}${wlFormClass}" method="post">
+              <form class="${wlFormClass}" method="post">
                 <input type="hidden" name="productId" value="${product.id}">
                 <button type="submit"><i class="${bookmarkIconClass}"></i></button>
               </form>
@@ -520,12 +529,11 @@ async function updateLoggingBestSeller(data, favorites, watchlist, cart) {
       </a>
       </div>
     `;
-    $('#bestSellerCarousel').append(cardHtml);
+    $carousel.append(cardHtml);
   }
 
-
   // Re-initialize Owl Carousel after adding content
-  $('#bestSellerCarousel').owlCarousel({
+  $carousel.addClass('owl-carousel owl-theme').owlCarousel({
     loop: true,
     margin: 10,
     nav: true,
@@ -542,7 +550,6 @@ async function updateLoggingBestSeller(data, favorites, watchlist, cart) {
     }
   });
 }
-
 
 //////////////////////////////////////////////////////////////////
 
@@ -785,12 +792,36 @@ async function searchProducts() {
       category: category
     }
   })
-    .then(response => {
+    .then(async response => {
       // Handle the response to display products
       console.log(response.data);
       const data = response.data;
+
       if (token && isAdmin == "false") {
-        updateLoggingProducts(data);
+
+        const favResponse = await axios.get("http://127.0.0.1:3000/api/product/fav", {
+          headers: {
+            "x-auth-token": token,
+          },
+        });
+  
+        const watchlistResponse = await axios.get("http://127.0.0.1:3000/api/product/watchlist", {
+          headers: {
+            "x-auth-token": token,
+          },
+        });
+  
+        const cartResponse = await axios.get("http://127.0.0.1:3000/api/cart", {
+          headers: {
+            "x-auth-token": token,
+          },});
+
+          const favorites = favResponse.data;
+          const watchlist = watchlistResponse.data;
+          const cart = cartResponse.data;
+
+          updateLoggingProducts(data, favorites, watchlist, cart);
+
       } else {
         updateNotLoggingProducts(data);
 
@@ -816,14 +847,36 @@ async function sortProducts() {
       category: category
     }
   })
-    .then(response => {
+        .then(async response => {
       // Handle the response to display products
       console.log(response.data);
       const data = response.data;
 
       if (token && isAdmin == "false") {
-        updateLoggingProducts(data);
-      } else {
+
+        const favResponse = await axios.get("http://127.0.0.1:3000/api/product/fav", {
+          headers: {
+            "x-auth-token": token,
+          },
+        });
+  
+        const watchlistResponse = await axios.get("http://127.0.0.1:3000/api/product/watchlist", {
+          headers: {
+            "x-auth-token": token,
+          },
+        });
+  
+        const cartResponse = await axios.get("http://127.0.0.1:3000/api/cart", {
+          headers: {
+            "x-auth-token": token,
+          },});
+
+          const favorites = favResponse.data;
+          const watchlist = watchlistResponse.data;
+          const cart = cartResponse.data;
+          
+          updateLoggingProducts(data, favorites, watchlist, cart);
+        } else {
         updateNotLoggingProducts(data);
 
       }

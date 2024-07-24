@@ -85,7 +85,9 @@ router.post("/", Validator, async (req, res) => {
     res.header("x-auth-token", token);
     const data = {
       token: token ,// Replace with your attribute and value
-      isAdmin: user.isAdmin
+      isAdmin: user.isAdmin,
+      userName: user.name
+
     };
     res.status(200).send(data);
     // res.status(200).send("Logged in Successfully");

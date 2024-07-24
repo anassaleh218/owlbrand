@@ -5,8 +5,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-  <title>Aroma Shop - Home</title>
-  <link rel="icon" href="asstes/img/Fevicon.png" type="image/png" />
+  <title>OWL Brand - Cart</title>
+  <link rel="icon" href="asstes/img/OwlIcon.png" type="image/png" />
   <link rel="stylesheet" href="asstes/vendors/bootstrap/bootstrap.min.css" />
   <link rel="stylesheet" href="asstes/vendors/fontawesome/css/all.css" />
   <link rel="stylesheet" href="asstes/vendors/themify-icons/themify-icons.css" />
@@ -255,6 +255,7 @@
   <script>
 
     cartIcon();
+
     async function updateTable() {
       $("#cartItems").empty(); // Ensure this matches the actual element ID in your HTML
 
@@ -406,6 +407,7 @@
         if (response.status === 200) {
           console.log("Cart emptied successfully");
           updateTable(); // Refresh the table to show the updated cart items
+          cartIcon();
         } else {
           console.log("Failed to empty the cart");
         }
@@ -430,6 +432,7 @@
         if (response.status === 200) {
           console.log("Item removed successfully");
           updateTable(); // Refresh the table to show the updated cart items
+          cartIcon();
         } else {
           console.log("Failed to remove the item");
         }

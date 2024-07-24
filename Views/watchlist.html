@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta http-equiv="X-UA-Compatible" content="ie=edge" />
   <title>Aroma Shop - Home</title>
-  <link rel="icon" href="asstes/img/Fevicon.png" type="image/png" />
+  <link rel="icon" href="asstes/img/OwlIcon.png" type="image/png" />
   <link rel="stylesheet" href="asstes/vendors/bootstrap/bootstrap.min.css" />
   <link rel="stylesheet" href="asstes/vendors/fontawesome/css/all.css" />
   <link rel="stylesheet" href="asstes/vendors/themify-icons/themify-icons.css" />
@@ -19,6 +19,7 @@
 </head>
 
 <body>
+  <div id="message-container"></div>
   <!--================ Start Header Menu Area =================-->
   <header class="header_area">
     <div class="main_menu">
@@ -338,15 +339,14 @@
         </ul>
       </div>
       <div class="card-body">
-        <p>ID: ${product.id}</p>
-        <h4 class="card-product__title">
-          <a href="single-product.html?prod=${product.id}">
-            Name: ${product.name}
-          </a>
-        </h4>
-        <p>Quantity: ${product.quantity}</p>
-        <p>Desc: ${product.description}</p>
-      </div>
+          <p style="color:grey;">${product.category}</p>
+          <h4 class="card-product__title">
+            <a href="single-product.html?prod=${product.id}">
+              ${product.name}
+            </a>
+          </h4>
+          <p class="card-product__price">$ ${product.price}</p>
+        </div>
     </div>
   </a>
 </div>`;

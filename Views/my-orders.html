@@ -5,8 +5,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-  <title>Aroma Shop - Home</title>
-  <link rel="icon" href="asstes/img/Fevicon.png" type="image/png" />
+  <title>OWL Brand - MyOrders</title>
+  <link rel="icon" href="asstes/img/OwlIcon.png" type="image/png" />
   <link rel="stylesheet" href="asstes/vendors/bootstrap/bootstrap.min.css" />
   <link rel="stylesheet" href="asstes/vendors/fontawesome/css/all.css" />
   <link rel="stylesheet" href="asstes/vendors/themify-icons/themify-icons.css" />
@@ -24,8 +24,8 @@
   <header class="header_area">
     <div class="main_menu">
       <nav class="navbar navbar-expand-lg navbar-light">
-        <div class="container" >
- 
+        <div class="container">
+
           <a class="navbar-brand logo_h" href="index.html">
             <img src="asstes/img/OwlLogo.png" width="200" alt="Owl Logo">
           </a>
@@ -104,67 +104,13 @@
 
   <!--================Order Details Area =================-->
   <section class="order_details section-margin--small">
-    <div class="container">
-      <!-- <p class="text-center billing-alert">Thank you. Your order has been received.</p> -->
+    <div class="container" id="msg">
       <div class="row mb-5" id="orders"></div>
-      <!--     
-          <?php
-                foreach($orderItems as $item){
-                ?>
-            <tr>
-              <td>
-                <p><?php echo $item['name'] ?></p>
-              </td>
-              <td>
-                <h5>x <?php echo $item['quantity'] ?></h5>
-              </td>
-              <td>
-                <p>$ <?php echo $item['total_price'] ?></p>
-              </td>
-            </tr>
-            <?php }?>
-            <tr>
-              <td>
-                <h4>Subtotal</h4>
-              </td>
-              <td>
-                <h5></h5>
-              </td>
-              <td>
-                <p>$ <?php echo $orderSubtotal ?></p>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <h4>Shipping</h4>
-              </td>
-              <td>
-                <h5></h5>
-              </td>
-              <td>
-                <p>Flat rate: $50.00</p>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <h4>Total</h4>
-              </td>
-              <td>
-                <h5></h5>
-              </td>
-              <td>
-                <h4>$ <?php echo $orderSubtotal+50 ?></h4>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div> 
-    </div>-->
+      
     </div>
   </section>
   <!--================End Order Details Area =================-->
 
-  <!--================ End =================-->
 
   <!-- footer -->
   <!--================ Start footer Area  =================-->
@@ -267,7 +213,8 @@
   <script>
 
     cartIcon();
-    
+    console.log("data");
+
     async function updateTable() {
       const url = "http://127.0.0.1:3000/api/order/all";
 
@@ -278,15 +225,23 @@
           },
         });
         const data = response.data;
-
         let cardsHtml = ""; // Accumulate HTML here
 
-        for (const item of data) {
-          const date = new Date(item.createdAt);
-          const formattedDate = date.toISOString().split('T')[0];
+        if (!Array.isArray(data) || data.length === 0) {
+          // Display message if there are no favorite products
+          const msg = `
+          <h4>No orders have been created yet!</h4>
+          <h4 class="text-primary">Don't wait! Add products to your cart and place an order now!</h4>
+          `;
+          $("#msg").append(msg);
+        } else {
+          for (const item of data) {
 
-          // Accumulate HTML string
-          cardsHtml += `
+            const date = new Date(item.createdAt);
+            const formattedDate = date.toISOString().split('T')[0];
+
+            // Accumulate HTML string
+            cardsHtml += `
             <div class="col-md-6 col-xl-4 mb-4 mb-xl-0">
                 <div class="confirmation-card p-3 mb-3">
                     <h3 class="billing-title">
@@ -318,10 +273,11 @@
                     </table>
                 </div>
             </div>`;
-        }
+          }
 
-        // Append all cards at once
-        $("#orders").append(cardsHtml);
+          // Append all cards at once
+          $("#orders").append(cardsHtml);
+        }
       } catch (error) {
         console.error("Error fetching order details:", error);
       }

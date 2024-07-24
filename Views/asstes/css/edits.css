@@ -309,3 +309,39 @@
   /*  */
 
   
+
+  #message-container {
+    position: fixed;
+    top: 56px; /* Adjust based on your navbar height */
+    left: 0;
+    right: 0;
+    z-index: 1050; /* Ensure it appears above other content */
+  }
+  
+  .alert {
+    margin: 0;
+    border-radius: 0; /* Optional: remove rounded corners */
+  }
+  
+  .btn-close {
+    font-size: large;
+    padding: 0.5rem; /* Adjust spacing */
+    float: right;
+  }
+
+ .nav-item .ti-shopping-cart-full::before{
+    color:red;
+    font-size: x-large;
+  }
+ .nav-item .ti-shopping-cart{
+  font-size: x-large;
+    
+  }
+ #userName{
+font-size: large;
+  }
+
+  /* 
+   */
+
+   

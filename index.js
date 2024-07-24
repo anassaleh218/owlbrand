@@ -7,7 +7,6 @@ require("dotenv").config();
 
 const swaggerJsDoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
-const swaggerDocument = require('./swagger.json');
 // router.use(cors()); 
 
 router.use(bodyParser.urlencoded({ extended: true }));

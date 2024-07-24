@@ -547,11 +547,6 @@ router.get('/all', async (req, res) => {
             ]
         });
         
-
-        if (!ordersBilling || ordersBilling.length === 0) {
-            return res.status(404).send('No orders found for this user');
-        }
-
         // Process the orders to transform img_url fields
         const ordersData = ordersBilling.map(orderBilling => {
             const orderBillingJSON = orderBilling.toJSON();

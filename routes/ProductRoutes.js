@@ -1169,7 +1169,7 @@ router.get("/feedbacks/:productId", async (req, res) => {
       include: {
         model: User,
         attributes: ['name'] // Assuming User model has a 'name' field
-      }
+      },order : [['createdAt', 'DESC']]
     });
 
     return res.status(200).json(feedbacks);

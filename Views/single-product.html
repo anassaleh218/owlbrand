@@ -5,8 +5,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-  <title>Aroma Shop - Home</title>
-  <link rel="icon" href="asstes/img/Fevicon.png" type="image/png" />
+  <title id="title"></title>
+  <link rel="icon" href="asstes/img/OwlIcon.png" type="image/png" />
   <link rel="stylesheet" href="asstes/vendors/bootstrap/bootstrap.min.css" />
   <link rel="stylesheet" href="asstes/vendors/fontawesome/css/all.css" />
   <link rel="stylesheet" href="asstes/vendors/themify-icons/themify-icons.css" />
@@ -273,24 +273,18 @@
           },
         });
         const product = response.data;
-
+        document.title =`OWL Brand - ${product.name}`;
         const cardHtml = `
         <div class="row s_product_inner">
           <div class="col-lg-6">
             <div id="productImages" class="owl-carousel owl-theme">
-              <!-- Carousel items will be dynamically added here
-                Nedddddddddddddddddd to modify sizeeeeeeeeeeeeee -->			
             </div>
           </div>
           <div class="col-lg-5 offset-lg-1">
             <div class="s_product_text">
               <h3>${product.name}</h3>
               <span>Price</span> :<h2>$${product.price}</h2>
-              <ul class="list">
-                <li><span>category</span> : ${product.category}</li>
-              </ul>
-
-              <p>description: ${product.description}</p>
+                <p><span>category</span> : ${product.category}</p>
               <div>
                 <label for="qty">Quantity:</label>
                 <form class="addtocart">
@@ -522,7 +516,7 @@
             <div class="review_item">
               <div class="media">
                 <div class="media-body">
-                  <h4>${item.name}</h4>
+                  <h4>${item.User.name}</h4>
                   ${filledStars}
                   ${emptyStars}
                 </div>
